@@ -1,6 +1,6 @@
 <?php render('header'); ?>
-<main class="d-flex errors">
-    <div class="content text-center">
+<main class="d-flex content">
+    <div class="error text-center">
         <h1><?= $code ?? '' ?></h1>
         <p>...<?= strtolower($message ?? '') ?>.</p>
     </div>

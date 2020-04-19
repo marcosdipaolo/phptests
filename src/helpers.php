@@ -28,6 +28,13 @@ if (!function_exists("views_path")) {
     }
 }
 
+if (!function_exists('routeIs')) {
+    function routeIs(string $route)
+    {
+        return '/' . $route === $_SERVER['REQUEST_URI'];
+    }
+}
+
 if (!function_exists("asset")) {
     function asset(string $path = null)
     {
