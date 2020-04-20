@@ -1,4 +1,4 @@
-require('../sass/style.scss');
+import '../sass/style.scss';
 window.addEventListener('load', function(){
-	console.log('acá!!!');
+	// js
 });

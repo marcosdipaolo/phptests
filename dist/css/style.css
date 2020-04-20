@@ -1,2 +1,2 @@
-*{margin:0;padding:0}footer{min-height:100px}main.content{min-height:calc(100vh - 171px)}main.content .error{margin:auto}main.content .error h1{font-size:156px}.alert.response-feedback{position:absolute;width:300px;height:67px;top:10px;right:10px;z-index:1;opacity:.8}
+*{margin:0;padding:0}footer{min-height:100px}main.content{min-height:calc(100vh - 171px)}main.content .error{margin:auto}main.content .error h1{font-size:156px}.alert.response-feedback{transition:opacity 2s;position:absolute;width:300px;min-height:67px;top:10px;right:10px;z-index:1;opacity:.9;font-size:14px}
 

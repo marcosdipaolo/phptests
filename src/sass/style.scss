@@ -16,11 +16,13 @@ main.content {
 	}
 }
 .alert.response-feedback {
+	transition: opacity 2s;
 	position: absolute;
 	width: 300px;
-	height: 67px;
+	min-height: 67px;
 	top: 10px;
 	right: 10px;
 	z-index: 1;
-	opacity: .8;
+	opacity: .9;
+	font-size: 14px;
 }

@@ -9,3 +9,11 @@
         <strong>Oh snap!!</strong> <?= $data['danger'] ?>
     </div>
 <?php } ?>
+<script>
+    setTimeout(function(){
+        const alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.opacity = "0";
+        }
+    }, 5000);
+</script>
