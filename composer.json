@@ -10,7 +10,10 @@
             "App\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/helpers/dev-helpers.php",
+            "src/helpers/http-helpers.php",
+            "src/helpers/system-helpers.php",
+            "src/helpers/view-helpers.php"
         ]
     },
     "require-dev": {

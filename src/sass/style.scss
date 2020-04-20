@@ -15,3 +15,12 @@ main.content {
 		}
 	}
 }
+.alert.response-feedback {
+	position: absolute;
+	width: 300px;
+	height: 67px;
+	top: 10px;
+	right: 10px;
+	z-index: 1;
+	opacity: .8;
+}

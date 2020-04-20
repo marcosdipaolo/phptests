@@ -71,17 +71,21 @@ class Router
             // figure out route and method
             $route = explode('?', $_SERVER['REQUEST_URI'])[0];
             $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
-            $action = $this->$requestMethod[$route];
             // check if route exists and if not send 404 page
             if ($this->routeDoesntExist($route, $requestMethod)) {
                 return (new PageController())->error(404, 'Page not found');
             }
+
+            // if closure, execute it
+            $action = $this->$requestMethod[$route];
             if($action instanceof \Closure) {
                 return $action();
             }
+
             // redirect to controller method
-            $controller = $this->resolveController($route);
-            $controllerMethod = $this->resolveMethod($route);
+            $controllerMethod = $this->resolveMethod($action);
+            $controller = $this->resolveController($action);
+
             return (new $controller)->$controllerMethod();
         } catch (\Throwable $e) {
             return $e->getMessage();
@@ -99,20 +103,20 @@ class Router
     }
 
     /**
-     * @param $route
+     * @param $action
      * @return string
      */
-    private function resolveController($route): string
+    private function resolveController($action): string
     {
-        return '\\App\\Controllers\\' . explode('@', $this->get[$route])[0];
+        return '\\App\\Controllers\\' . explode('@', $action)[0];
     }
 
     /**
-     * @param $route
+     * @param $action
      * @return string
      */
-    private function resolveMethod($route): string
+    private function resolveMethod($action): string
     {
-        return explode('@', $this->get[$route])[1];
+        return explode('@', $action)[1];
     }
 }
