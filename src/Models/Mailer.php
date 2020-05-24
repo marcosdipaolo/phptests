@@ -14,6 +14,7 @@ class Mailer
         $transport = new Swift_SmtpTransport(getenv('MAIL_HOST'), getenv('MAIL_PORT'));
         $transport->setUsername(getenv('MAIL_USERNAME'));
         $transport->setPassword(getenv('MAIL_PASSWORD'));
+        $transport->setEncryption(getenv('MAIL_ENCRYPTION'));
         // Create the Mailer using your created Transport
         $mailer = new Swift_Mailer($transport);
         // Create a message

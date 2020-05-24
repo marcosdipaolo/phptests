@@ -1,20 +1,12 @@
 <?php
-if (!function_exists("asset")) {
-    function asset(string $path = null)
-    {
-        $output = 'http://' . $_SERVER['HTTP_HOST'] . '/dist';
-        if ($path) {
-            $output .= "/{$path}";
-        }
-        return $output;
-    }
-}
-
-
 
 function on_shut_down()
 {
-    if (error_get_last()['type'] == E_ERROR) {
+    if (
+        isset(error_get_last()['type']) && 
+        isset(error_get_last()['message']) && 
+        (error_get_last()['type'] == E_ERROR)
+        ) {
         return render('error.errors', [
             'code' => 500,
             'message' => error_get_last()['message']
@@ -24,3 +16,12 @@ function on_shut_down()
 
 
 register_shutdown_function('on_shut_down');
+
+if (!function_exists('env')) {
+    function env(string $key)
+    {
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv->load();
+        return getenv($key);
+    }
+}

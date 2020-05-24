@@ -3,7 +3,10 @@
     "description": "",
     "require": {
         "vlucas/phpdotenv": "^4.1",
-        "swiftmailer/swiftmailer": "^6.0"
+        "swiftmailer/swiftmailer": "^6.0",
+        "robmorgan/phinx": "^0.12.1",
+        "symfony/yaml": "^5.0",
+        "nesbot/carbon": "^2.34"
     },
     "autoload": {
         "psr-4": {

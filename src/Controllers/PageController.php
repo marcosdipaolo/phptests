@@ -9,6 +9,11 @@ class PageController
         return render('index');
     }
 
+    public function mail()
+    {
+        return render('mail');
+    }
+
     public function about()
     {
         return render('about');
