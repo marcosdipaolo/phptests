@@ -85,10 +85,9 @@ class Router
             // redirect to controller method
             $controllerMethod = $this->resolveMethod($action);
             $controller = $this->resolveController($action);
-
             return (new $controller)->$controllerMethod();
         } catch (\Throwable $e) {
-            return $e->getMessage();
+            throw $e;
         }
     }
 

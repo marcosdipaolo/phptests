@@ -2,7 +2,9 @@
 
 namespace App\Database;
 
-class Connection 
+use PDO;
+
+class Connection
 {
     /** @var string $dbname */
     private $dbname;
@@ -25,13 +27,13 @@ class Connection
    }
 
    /**
-    * @return \PDO
+    * @return PDO
     */
-   public function getPdo(): \PDO
+   public function getPdo(): PDO
    {
        $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname}";
-       $pdo = new \PDO($dsn, $this->username, $this->password);
-       $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+       $pdo = new PDO($dsn, $this->username, $this->password);
+       $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        return  $pdo;
    }
 

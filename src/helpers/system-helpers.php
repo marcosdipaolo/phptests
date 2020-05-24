@@ -1,5 +1,14 @@
 <?php
 
+if (!function_exists('env')) {
+    function env(string $key)
+    {
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv->load();
+        return getenv($key);
+    }
+}
+
 function on_shut_down()
 {
     if (
@@ -16,12 +25,3 @@ function on_shut_down()
 
 
 register_shutdown_function('on_shut_down');
-
-if (!function_exists('env')) {
-    function env(string $key)
-    {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-        $dotenv->load();
-        return getenv($key);
-    }
-}

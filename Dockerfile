@@ -19,6 +19,6 @@ RUN apt-get update && \
     && docker-php-ext-install gd pdo pdo_mysql pdo_sqlite zip bcmath exif soap
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
+RUN composer g require psy/psysh:@stable
 RUN a2enmod rewrite
 RUN service apache2 restart
