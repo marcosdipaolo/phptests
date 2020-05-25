@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Framework;
 
 use Swift_Mailer;
 use Swift_Message;

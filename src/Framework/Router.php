@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Framework;
 
-use App\Controllers\PageController;
+use App\Http\Controllers\PageController;
+use Throwable;
 
 class Router
 {
@@ -71,9 +72,10 @@ class Router
             // figure out route and method
             $route = explode('?', $_SERVER['REQUEST_URI'])[0];
             $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+
             // check if route exists and if not send 404 page
             if ($this->routeDoesntExist($route, $requestMethod)) {
-                return (new PageController())->error(404, 'Page not found');
+                throw new \Exception('Page Not Found', 404);
             }
 
             // if closure, execute it
@@ -85,9 +87,9 @@ class Router
             // redirect to controller method
             $controllerMethod = $this->resolveMethod($action);
             $controller = $this->resolveController($action);
-            return (new $controller)->$controllerMethod();
-        } catch (\Throwable $e) {
-            throw $e;
+            return app()->get($controller)->$controllerMethod();
+        } catch (Throwable $e) {
+            return app()->get(PageController::class)->error($e->getCode(), $e->getMessage());
         }
     }
 
@@ -107,7 +109,7 @@ class Router
      */
     private function resolveController($action): string
     {
-        return '\\App\\Controllers\\' . explode('@', $action)[0];
+        return '\\App\\Http\\Controllers\\' . explode('@', $action)[0];
     }
 
     /**

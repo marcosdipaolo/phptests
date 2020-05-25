@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
-use App\Models\Mailer;
+use App\Framework\Mailer;
 use App\Repositories\EmailRepository;
 
 class MailController
 {
+    /** @var EmailRepository $emailRepository */
     private $emailRepository;
 
-    public function __construct()
+    public function __construct(EmailRepository $emailRepository)
     {
-        $this->emailRepository = new EmailRepository();
+        $this->emailRepository = $emailRepository;
     }
 
     public function mail()

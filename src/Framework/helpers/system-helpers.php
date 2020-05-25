@@ -1,11 +1,25 @@
 <?php
 
+use App\Framework\Providers\AppServiceProvider;
+use League\Container\Container;
+use League\Container\ReflectionContainer;
+
 if (!function_exists('env')) {
     function env(string $key)
     {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../php-tests/');
         $dotenv->load();
         return getenv($key);
+    }
+}
+
+if (!function_exists('app')) {
+    function app()
+    {
+        $app = new Container();
+        $app->delegate(new ReflectionContainer);
+        $app->addServiceProvider(AppServiceProvider::class);
+        return $app;
     }
 }
 

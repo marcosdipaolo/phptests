@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Abstracts\Repositories\EmailAbstractRepository;
 use Carbon\Carbon;
 
-class EmailRepository extends BaseRepository
+class EmailRepository extends BaseRepository implements EmailAbstractRepository
 {
     public function saveEmail(array $email)
     {
@@ -16,5 +17,12 @@ class EmailRepository extends BaseRepository
             ':body' => $email['body'],
             ':created_at' => Carbon::now()->toDateTimeString()
         ]);
+    }
+
+    public function fetchAll()
+    {
+        $sql = /** @lang SQL */ "SELECT * FROM emails";
+        $stmt = $this->connection->query($sql);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

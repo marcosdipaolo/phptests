@@ -22,12 +22,13 @@ if (!function_exists('render')) {
     {
         try {
             $path = str_replace('.', '/', $viewPath);
+            $path =  __DIR__ . "/../../Views/{$path}.view.php";
             foreach($data as $key => $value) {
                 $$key = $value;
             }
-            return require './src/Views/' . $path . '.view.php';
+            return require $path;
         } catch (Throwable $e) {
-            return (new App\Controllers\PageController)->error($e->getCode(), $e->getMessage());
+            return (new App\Http\Controllers\PageController)->error($e->getCode(), $e->getMessage());
         }
     }
 }

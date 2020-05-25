@@ -3,7 +3,41 @@
         <main class="content">
             <br>
             <br>
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modal">Mail</button>
+            <h3 class="text-center">E-Mails</h3>
+            <br>
+            <button type="button" class="btn btn-outline-primary d-block ml-auto" data-toggle="modal" data-target="#modal">New E-Mail</button>
+
+            <table class="table mt-4">
+                <thead class="thead-secondary">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">To</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Body</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                if ($emails && is_array($emails) && (count($emails) > 0)) {
+                    foreach($emails as $email) {
+
+                ?>
+                        <tr>
+                            <th scope="row"><?= $email['id'] ?></th>
+                            <td><?= $email['to'] ?></td>
+                            <td><?= $email['subject'] ?></td>
+                            <td><?= $email['body'] ?></td>
+                            <td></td>
+                        </tr>
+                <?php
+                    }
+                }
+                ?>
+                </tbody>
+            </table>
+
+            <!--     MODAL       -->
             <div class="modal" id="modal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

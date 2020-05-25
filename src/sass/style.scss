@@ -1,3 +1,6 @@
+$primary: #2C3E50;
+$secondary: #18BC9C;
+
 * {
 	margin: 0;
 	padding: 0;
@@ -9,9 +12,17 @@ footer {
 main.content {
 	min-height: calc(100vh - 171px);
 	.error {
+		width: 600px;
 		margin: auto;
 		h1 {
-			font-size: 156px;
+			font-size: 120px;
+			color: $primary;
+		}
+		p {
+			font-size: 18px;
+			font-weight: bold;
+			color: $secondary;
+			margin: 0 auto;
 		}
 	}
 }
@@ -25,4 +36,9 @@ main.content {
 	z-index: 1;
 	opacity: .9;
 	font-size: 14px;
+}
+
+.thead-secondary {
+	background-color: $secondary!important;
+	color: white;
 }
