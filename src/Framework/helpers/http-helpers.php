@@ -43,3 +43,19 @@ if (!function_exists('get')) {
         return $get;
     }
 }
+
+if (!function_exists('baseUrl')) {
+    function baseUrl()
+    {
+        return env('BASE_URL');
+    }
+}
+
+if (!function_exists('redirect')) {
+    function redirect(string $uri, $data = [])
+    {
+        setFlashMessages($data);
+        header("Location: " . baseUrl() . $uri, true, 302);
+        return;
+    }
+}

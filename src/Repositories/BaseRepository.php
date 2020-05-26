@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Database\Connection;
+use DB\Connection;
 use PDO;
 
 class BaseRepository 

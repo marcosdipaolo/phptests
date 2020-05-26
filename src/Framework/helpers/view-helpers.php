@@ -11,6 +11,19 @@ if (!function_exists("asset")) {
     }
 }
 
+if (!function_exists('setFlashMessages')){
+    function setFlashMessages(array $data): void
+    {
+        $types = ['danger' => '<strong>Oh Snap!! </strong>', 'success' => '<strong>Success!! </strong>'];
+        foreach ($types as $type => $heading) {
+            if (isset($data[$type])) {
+                session()->put($type, $heading .    $data[$type]);
+                unset($data[$type]);
+            }
+        }
+    }
+}
+
 
 if (!function_exists('render')) {
     /**
@@ -21,6 +34,7 @@ if (!function_exists('render')) {
     function render(string $viewPath, array $data = [])
     {
         try {
+            setFlashMessages($data);
             $path = str_replace('.', '/', $viewPath);
             $path =  __DIR__ . "/../../Views/{$path}.view.php";
             foreach($data as $key => $value) {
@@ -45,5 +59,15 @@ if (!function_exists("views_path")) {
             $output .= "/{$path}";
         }
         return $output;
+    }
+}
+
+if (!function_exists('clearFlashMessages')) {
+    function clearFlashMessages()
+    {
+        $types = ['success', 'info', 'warning', 'danger', 'secondary', 'primary'];
+        foreach($types as $type){
+            session()->forget($type);
+        }
     }
 }

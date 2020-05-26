@@ -21,6 +21,9 @@ class PageController
 
     public function mail()
     {
+        if(!auth()->user()) {
+            redirect('/login');
+        }
         $emails = $this->emailRepository->fetchAll();
         return render('mail', compact('emails'));
     }

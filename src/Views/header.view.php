@@ -25,9 +25,26 @@
                         <li class="nav-item <?= routeIs('about') ? 'active' : '' ?>">
                             <a class="nav-link" href="/about">About</a>
                         </li>
+                        <?php if (auth()->user()) { ?>
                         <li class="nav-item <?= routeIs('mail') ? 'active' : '' ?>">
                             <a class="nav-link" href="/mail">E-Mail</a>
                         </li>
+                        <?php } ?>
+                        <li class="divider"></li>
+                        <?php if (!auth()->user()) { ?>
+                        <li><a href="/login" class="nav-link">Login</a></li>
+                        <li><a href="/register" class="nav-link">Register</a></li>
+                        <?php } else { ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="logged" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><?=
+                                ucfirst(auth()->user()->getUsername()) ?></a>
+                            <div class="dropdown-menu" aria-labelledby="logged">
+                                <a href="#" class="dropdown-item">Account</a>
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                            </div>
+                        </li>
+                        <?php } ?>
+
                     </ul>
                 </div>
             </div>

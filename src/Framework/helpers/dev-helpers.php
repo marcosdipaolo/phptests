@@ -15,10 +15,3 @@ if (!function_exists('d')) {
         call_user_func_array('dump', $args);
     }
 }
-
-if (!function_exists('redirect')) {
-    function redirect(string $uri)
-    {
-        header("Location: {$uri}", true, 200);
-    }
-}

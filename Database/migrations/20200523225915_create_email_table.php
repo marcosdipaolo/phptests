@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Phinx\Migration\AbstractMigration;
 
 class CreateEmailTable extends AbstractMigration
@@ -35,7 +36,7 @@ class CreateEmailTable extends AbstractMigration
         $table->addColumn('to', 'string')
             ->addColumn('subject', 'string', ['limit' => 50])
             ->addColumn('body', 'text')
-            ->addColumn('created_at', 'datetime')
+            ->addTimestamps()
             ->create();
     }
 }

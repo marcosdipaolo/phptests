@@ -28,7 +28,7 @@ class MailController
             ) {
                 Mailer::send($subject, getenv('MAIL_FROM'),
                     $name, [$to], $body);
-                return render('index', ['success' => 'Mail sent and stored']);
+                return redirect('/mail', ['success' => 'Mail sent and stored']);
             }
             throw new \Exception('Unknown Error');
         } catch(\Throwable $e) {

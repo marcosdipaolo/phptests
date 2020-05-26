@@ -11,7 +11,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "DB\\": "Database/"
         },
         "files": [
             "src/Framework/helpers/dev-helpers.php",
