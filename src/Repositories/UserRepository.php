@@ -6,6 +6,10 @@ use App\Models\User;
 
 class UserRepository extends BaseRepository
 {
+    /**
+     * @param User $user
+     * @return User
+     */
     public function save(User $user)
     {
         $sql = /** @lang SQL */ "INSERT INTO `users` (`username`, `email`, `password`) 
@@ -19,6 +23,10 @@ class UserRepository extends BaseRepository
         return $this->get($this->connection->lastInsertId());
     }
 
+    /**
+     * @param int $id
+     * @return User
+     */
     public function get(int $id)
     {
         $sql = /** @lang SQL */ "SELECT * FROM users WHERE id = {$id}";
@@ -30,22 +38,8 @@ class UserRepository extends BaseRepository
 
     /**
      * @param string $email
-     * @param string $password
-     * @return User|bool
+     * @return User|null
      */
-    public function authenticate(string $email, string $password)
-    {
-        $user = $this->findByEmail($email);
-        if ($user) {
-            $authenticated = password_verify($password, $user->getPassword());
-            if ($authenticated) {
-                return $user;
-            }
-            return false;
-        }
-        return false;
-    }
-
     public function findByEmail(string $email)
     {
         $sql = /** @lang SQL */"SELECT * FROM `users` WHERE `email` = '{$email}'";

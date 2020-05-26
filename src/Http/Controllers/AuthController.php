@@ -2,28 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\AuthenticationRepository;
 use App\Repositories\UserRepository;
 
 class AuthController
 {
-    /** @var UserRepository $userRepository */
-    private $userRepository;
+    /** @var AuthenticationRepository $authenticationRepository */
+    private $authenticationRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(AuthenticationRepository $authenticationRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->authenticationRepository = $authenticationRepository;
     }
 
     public function login()
     {
         try {
-            if ($user = $this->userRepository->authenticate(
+            if ($user = $this->authenticationRepository->authenticate(
                 request()->email, request()->password)
             ) {
                 auth()->login($user);
                 redirect('/', ['success' => 'You\'ve been loggedd in!']);
                 return true;
             }
+            $this->authenticationRepository->createFailedLoginAttemp();
             redirect('/login', ['danger' => 'There is no user with those credentials']);
         } catch (\Throwable $e) {
             return render('auth.login', ['danger' => $e->getMessage()]);

@@ -1,9 +1,8 @@
 <?php
 
-use Carbon\Carbon;
 use Phinx\Migration\AbstractMigration;
 
-class CreateEmailTable extends AbstractMigration
+class FailedLoginAttemps extends AbstractMigration
 {
     /**
      * Change Method.
@@ -32,11 +31,9 @@ class CreateEmailTable extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('emails');
-        $table->addColumn('to', 'string')
-            ->addColumn('subject', 'string', ['limit' => 50])
-            ->addColumn('body', 'text')
-            ->addTimestampsWithTimezone()
+        $table = $this->table('failed_login_attemps');
+        $table->addColumn('ip_address', 'string')
+            ->addTimestamps()
             ->create();
     }
 }
