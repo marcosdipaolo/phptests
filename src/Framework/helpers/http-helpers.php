@@ -56,7 +56,7 @@ if (!function_exists('redirect')) {
     {
         setFlashMessages($data);
         header("Location: " . baseUrl() . $uri, true, 302);
-        return;
+        exit();
     }
 }
 if (!function_exists('getRealIpAddr')) {
