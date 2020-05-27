@@ -4,6 +4,8 @@ use App\Framework\Auth;
 use App\Framework\Providers\AppServiceProvider;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 if (!function_exists('env')) {
     function env(string $key)
@@ -35,6 +37,32 @@ if (!function_exists('session')) {
     function session()
     {
         return app()->get(App\Framework\Session::class);
+    }
+}
+
+if (!function_exists('slug')) {
+    function slug(string $text)
+    {
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = preg_replace('~[^-\w]+~', '', $text);
+        $text = trim($text, '-');
+        $text = preg_replace('~-+~', '-', $text);
+        $text = strtolower($text);
+        if (empty($text)) {
+          return 'n-a';
+        }
+        return $text;
+      }
+}
+
+if (!function_exists('setUpLogger')) {
+    function setUpLogger(string $name) 
+    {
+        $log = new Logger($name);
+        $filename = slug($name);
+        $log->pushHandler(new StreamHandler(__DIR__ . "/../logs/{$filename}.log", Logger::INFO));
+        return $log;
     }
 }
 
