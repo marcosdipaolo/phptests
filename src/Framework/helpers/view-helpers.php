@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PageController;
+
 if (!function_exists("asset")) {
     function asset(string $path = null)
     {
@@ -41,7 +43,9 @@ if (!function_exists('render')) {
             }
             return require $path;
         } catch (Throwable $e) {
-            return (new App\Http\Controllers\PageController)->error($e->getCode(), $e->getMessage());
+            return app()
+                ->get(PageController::class)
+                ->error($e->getCode(), $e->getMessage());
         }
     }
 }
