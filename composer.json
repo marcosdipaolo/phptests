@@ -1,6 +1,18 @@
 {
     "name": "marcos/test-native-php",
-    "description": "",
+    "description": "Your package description goes here",
+    "type": "library",
+    "keywords": ["relevant","tags","go","here"],
+    "homepage": "http://marcosdipaolo.com",
+    "license": "MIT",
+     "authors": [
+        {
+            "name": "Marcos Di Paolo",
+            "email": "marcosdipaolo@gmail.com",
+            "homepage": "http://marcosdipaolo.com",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "vlucas/phpdotenv": "^4.1",
         "swiftmailer/swiftmailer": "^6.0",
