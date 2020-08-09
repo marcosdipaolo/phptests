@@ -80,7 +80,7 @@ class Router
 
             // if closure, execute it
             $action = $this->$requestMethod[$route];
-            if($action instanceof \Closure) {
+            if ($action instanceof \Closure) {
                 return $action();
             }
 

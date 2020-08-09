@@ -14,7 +14,7 @@ class Auth
     {
         return password_hash($password, PASSWORD_BCRYPT);
     }
-
+    
     public function user()
     {
         return session()->get('user');

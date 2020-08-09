@@ -5,7 +5,7 @@ namespace App\Repositories;
 use DB\Connection;
 use PDO;
 
-class BaseRepository 
+class BaseRepository
 {
     /** @var PDO $connection  */
     protected $connection;

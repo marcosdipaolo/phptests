@@ -36,11 +36,20 @@ class AuthenticationRepository extends BaseRepository
 
     public function createFailedLoginAttemp()
     {
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = getRealIpAddr();
         $sql = /** @lang SQL */"INSERT INTO failed_login_attemps (`ip_address`) VALUES (:ip)";
         $stmt = $this->connection->prepare($sql);
         return $stmt->execute([
             ':ip' => $ip
         ]);
+    }
+
+    public function exceededThrottle(string $ip)
+    {
+        $minutes = intval(env('THROTTLE_MINUTES_CONFIG'));
+        $attemps = intval(env('THROTTLE_LOGIN_ATTEMPS'));
+        $sql = /** @lang SQL */"SELECT * FROM `failed_login_attemps` WHERE `created_at` >= DATE_SUB(now(),interval {$minutes} minute) AND `ip_address` = '{$ip}';";
+        $stmt = $this->connection->query($sql);
+        return count($stmt->fetchAll()) > $attemps;
     }
 }

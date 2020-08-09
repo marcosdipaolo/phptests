@@ -1,5 +1,7 @@
 <?php
 
+use App\Framework\Request;
+
 if (!function_exists('routeIs')) {
     /**
      * @param string $route
@@ -12,35 +14,33 @@ if (!function_exists('routeIs')) {
 }
 
 if (!function_exists('request')) {
-    function request()
+    function request(string $key = null)
     {
-        $request = new stdClass();
-        foreach ($_REQUEST as $key => $value) {
-            $request->$key = $value;
+        $request = new Request;
+        if ($key) {
+            return $request->get($key);
         }
         return $request;
     }
 }
 
 if (!function_exists('post')) {
-    function post()
+    function post(string $key = null)
     {
-        $post = new stdClass();
-        foreach ($_POST as $key => $value) {
-            $post->$key = $value;
+        if ($key) {
+            return isset($_POST[$key]) ? $_POST[$key] : null;
         }
-        return $post;
+        return $_POST;
     }
 }
 
 if (!function_exists('get')) {
-    function get()
+    function get(string $key = null)
     {
-        $get = new stdClass();
-        foreach ($_GET as $key => $value) {
-            $get->$key = $value;
+        if ($key) {
+            return isset($_GET[$key]) ? $_GET[$key] : null;
         }
-        return $get;
+        return $_GET;
     }
 }
 
@@ -56,6 +56,20 @@ if (!function_exists('redirect')) {
     {
         setFlashMessages($data);
         header("Location: " . baseUrl() . $uri, true, 302);
-        return;
+        exit();
+    }
+}
+if (!function_exists('getRealIpAddr')) {
+    function getRealIpAddr()
+    {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            //check ip from share internet
+            $ip=$_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  //to check ip is pass from proxy
+            $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip=$_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
     }
 }

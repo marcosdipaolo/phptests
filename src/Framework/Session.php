@@ -71,7 +71,7 @@ class Session
         try {
             unset($_SESSION[$key]);
             return true;
-        } catch(\Throwable $e) {
+        } catch (\Throwable $e) {
             return false;
         }
     }

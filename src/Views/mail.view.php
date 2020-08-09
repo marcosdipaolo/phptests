@@ -23,9 +23,8 @@
                 </thead>
                 <tbody>
                 <?php
-                    foreach($emails as $email) {
-
-                ?>
+                    foreach ($emails as $email) {
+                        ?>
                         <tr>
                             <th scope="row"><?= $email['id'] ?></th>
                             <td><?= $email['to'] ?></td>
