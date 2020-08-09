@@ -17,7 +17,7 @@ RUN apt-get update && \
     sqlite3 \
     libsqlite3-dev \
     && docker-php-ext-configure gd \
-    && docker-php-ext-install gd mysqli pdo pdo_mysql pdo_sqlite zip bcmath exif soap
+    && docker-php-ext-install gd mysqli pdo pdo_mysql zip bcmath exif soap
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN a2enmod rewrite

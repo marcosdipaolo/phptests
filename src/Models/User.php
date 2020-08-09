@@ -4,10 +4,10 @@ namespace App\Models;
 
 use App\Framework\Auth;
 
-class User
+class User extends Model
 {
     /** @var string $username */
-    private $username;
+    protected $username;
     /** @var string $email */
     private $email;
     /** @var string $password */

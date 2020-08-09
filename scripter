@@ -1,0 +1,25 @@
+<?php
+
+use App\Scripter\FileMaker;
+use Dotenv\Dotenv;
+
+require 'vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Lets get rid of script name
+array_shift($argv);
+$argc--;
+
+$method = explode(':', $argv[0])[0];
+$object = isset(explode(':', $argv[0])[1]) ? explode(':', $argv[0])[1] : null;
+$name = $argv[1];
+
+$method($object, $name);
+
+function make($object, $name)
+{
+    FileMaker::make($object, $name);
+    
+}
