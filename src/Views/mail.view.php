@@ -5,12 +5,14 @@
             <br>
             <h3 class="text-center">E-Mails</h3>
             <br>
-            <button type="button" class="btn btn-outline-primary d-block ml-auto" data-toggle="modal" data-target="#modal">New E-Mail</button>
+            <button type="button" class="btn btn-outline-primary d-block ml-auto" data-toggle="modal"
+                    data-target="#modal">New E-Mail
+            </button>
 
 
-                <?php
-                if ($emails && is_array($emails) && (count($emails) > 0)) {
-                    ?>
+            <?php
+            if (isset($emails) && is_array($emails) && (count($emails) > 0)) {
+            ?>
             <table class="table mt-4">
                 <thead class="bg-secondary">
                 <tr>
@@ -23,17 +25,17 @@
                 </thead>
                 <tbody>
                 <?php
-                    foreach ($emails as $email) {
-                        ?>
-                        <tr>
-                            <th scope="row"><?= $email['id'] ?></th>
-                            <td><?= $email['to'] ?></td>
-                            <td><?= $email['subject'] ?></td>
-                            <td><?= $email['body'] ?></td>
-                            <td></td>
-                        </tr>
-                <?php
-                    }
+                foreach ($emails as $email) {
+                    ?>
+                    <tr>
+                        <th scope="row"><?= $email['id'] ?></th>
+                        <td><?= $email['to'] ?></td>
+                        <td><?= $email['subject'] ?></td>
+                        <td><?= $email['body'] ?></td>
+                        <td></td>
+                    </tr>
+                    <?php
+                }
                 } else {
                     echo '<p class="text-center">there is no email to show...</p>';
                 }

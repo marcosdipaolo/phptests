@@ -36,6 +36,10 @@ class CreateUserTable extends AbstractMigration
         $table
             ->addColumn('username', 'string')
             ->addColumn('email', 'string')
+            ->addIndex(['email'], [
+                'unique' => true,
+                'name' => 'idx_users_email'
+            ])
             ->addColumn('password', 'string')
             ->addColumn('verified_at', 'datetime', [
                 'null' => true

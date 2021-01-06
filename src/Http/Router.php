@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework;
+namespace App\Http;
 
 use App\Http\Controllers\PageController;
 use Throwable;
@@ -17,6 +17,17 @@ class Router
     public $patch = [];
     /** @var array $delete */
     public $delete = [];
+
+    public function loadRoutes()
+    {
+        $routes = require(__DIR__ . '/router.php');
+        foreach ($routes as $verb => $handlers) {
+            foreach ($handlers as $uriHandler) {
+                [$uri, $handler] = $uriHandler;
+                $this->$verb($uri, $handler);
+            }
+        }
+    }
 
     /**
      * @param $uri
@@ -98,9 +109,18 @@ class Router
      * @param $requestMethod
      * @return bool
      */
-    private function routeDoesntExist(string $route, $requestMethod)
+    private function routeDoesntExist(string $route, $requestMethod): bool
     {
         return !in_array($route, array_keys($this->$requestMethod));
+    }
+
+    /**
+     * @param $action
+     * @return string
+     */
+    private function resolveMethod($action): string
+    {
+        return explode('@', $action)[1];
     }
 
     /**
@@ -112,12 +132,4 @@ class Router
         return '\\App\\Http\\Controllers\\' . explode('@', $action)[0];
     }
 
-    /**
-     * @param $action
-     * @return string
-     */
-    private function resolveMethod($action): string
-    {
-        return explode('@', $action)[1];
-    }
 }

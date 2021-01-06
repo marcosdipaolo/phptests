@@ -40,7 +40,7 @@ class Connection
     /**
      * @return string
      */
-    public function getDbname()
+    public function getDbname(): string
     {
         return $this->dbname;
     }
@@ -48,7 +48,7 @@ class Connection
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -56,7 +56,7 @@ class Connection
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -64,7 +64,7 @@ class Connection
     /**
      *  @return string
      */
-    public function getHost()
+    public function getHost(): string
     {
         return $this->host;
     }

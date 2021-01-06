@@ -17,7 +17,7 @@ if (!function_exists('env')) {
 }
 
 if (!function_exists('app')) {
-    function app()
+    function app(): Container
     {
         $app = new Container();
         $app->delegate(new ReflectionContainer);
@@ -27,21 +27,21 @@ if (!function_exists('app')) {
 }
 
 if (!function_exists('auth')) {
-    function auth()
+    function auth(): Auth
     {
         return new Auth();
     }
 }
 
 if (!function_exists('session')) {
-    function session()
+    function session(): App\Framework\Session
     {
         return app()->get(App\Framework\Session::class);
     }
 }
 
 if (!function_exists('slug')) {
-    function slug(string $text)
+    function slug(string $text): string
     {
         $text = preg_replace('~[^\pL\d]+~u', '-', $text);
         $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
@@ -57,7 +57,7 @@ if (!function_exists('slug')) {
 }
 
 if (!function_exists('setUpLogger')) {
-    function setUpLogger(string $name) 
+    function setUpLogger(string $name): Logger
     {
         $log = new Logger($name);
         $filename = slug($name);

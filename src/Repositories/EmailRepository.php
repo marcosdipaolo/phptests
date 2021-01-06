@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class EmailRepository extends BaseRepository implements EmailAbstractRepository
 {
-    public function saveEmail(array $email)
+    public function saveEmail(array $email): bool
     {
         $sql = /** @lang SQL */ "INSERT INTO `emails` (`to`, `subject`, `body`, `created_at`) VALUES (:to, :subject, :body, :created_at)";
         $stmt = $this->connection->prepare($sql);
@@ -19,7 +19,7 @@ class EmailRepository extends BaseRepository implements EmailAbstractRepository
         ]);
     }
 
-    public function fetchAll()
+    public function fetchAll(): array
     {
         $sql = /** @lang SQL */ "SELECT * FROM emails";
         $stmt = $this->connection->query($sql);

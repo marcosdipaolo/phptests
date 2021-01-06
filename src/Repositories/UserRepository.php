@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use PDOStatement;
 
 class UserRepository extends BaseRepository
 {
@@ -10,7 +11,7 @@ class UserRepository extends BaseRepository
      * @param User $user
      * @return User
      */
-    public function save(User $user)
+    public function save(User $user): User
     {
         $sql = /** @lang SQL */ "INSERT INTO `users` (`username`, `email`, `password`) 
             VALUES (:username, :email, :password)";
@@ -27,26 +28,35 @@ class UserRepository extends BaseRepository
      * @param int $id
      * @return User
      */
-    public function get(int $id)
+    public function get(int $id): User
     {
         $sql = /** @lang SQL */ "SELECT * FROM users WHERE id = {$id}";
+
+        /** @var PDOStatement $stmt */
         $stmt = $this->connection->query($sql);
-        $array = $stmt->fetch();
-        return (new User)->setUsername($array['username'])
-            ->setEmail($array['email']);
+
+        /** @var array $user */
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return (new User)
+            ->setId($user['id'])
+            ->setUsername($user['username'])
+            ->setEmail($user['email']);
     }
 
     /**
      * @param string $email
      * @return User|null
      */
-    public function findByEmail(string $email)
+    public function findByEmail(string $email): ?User
     {
         $sql = /** @lang SQL */"SELECT * FROM `users` WHERE `email` = '{$email}'";
         $stmt = $this->connection->query($sql);
         $data = $stmt->fetch();
         if ($data) {
-            return (new User)->setEmail($data['email'])
+            return (new User)
+                ->setId($data['id'])
+                ->setEmail($data['email'])
                 ->setUsername($data['username'])
                 ->setPassword($data['password']);
         }

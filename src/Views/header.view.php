@@ -8,45 +8,48 @@
     <link rel="stylesheet" href="<?php echo asset('css/style.css') ?>">
 </head>
 <body>
-    <header>
-        <?php render('error.messages', $data) ?>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<header>
+    <?php /** @var Array $data */ ?>
+    <?php render('error.messages', $data) ?>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item <?= routeIs('') ? 'active' : '' ?>">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item <?= routeIs('about') ? 'active' : '' ?>">
-                            <a class="nav-link" href="/about">About</a>
-                        </li>
-                        <?php if (auth()->user()) { ?>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item <?= routeIs('') ? 'active' : '' ?>">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item <?= routeIs('about') ? 'active' : '' ?>">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <?php if (auth()->user()) { ?>
                         <li class="nav-item <?= routeIs('mail') ? 'active' : '' ?>">
                             <a class="nav-link" href="/mail">E-Mail</a>
                         </li>
-                        <?php } ?>
-                        <li class="divider"></li>
-                        <?php if (!auth()->user()) { ?>
+                    <?php } ?>
+                    <li class="divider"></li>
+                    <?php if (!auth()->user()) { ?>
                         <li><a href="/login" class="nav-link">Login</a></li>
                         <li><a href="/register" class="nav-link">Register</a></li>
-                        <?php } else { ?>
+                    <?php } else { ?>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="logged" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#"><?=
+                            <a class="nav-link dropdown-toggle" id="logged" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" href="#"><?=
                                 ucfirst(auth()->user()->getUsername()) ?></a>
                             <div class="dropdown-menu" aria-labelledby="logged">
                                 <a href="#" class="dropdown-item">Account</a>
                                 <a class="dropdown-item" href="/logout">Logout</a>
                             </div>
                         </li>
-                        <?php } ?>
+                    <?php } ?>
 
-                    </ul>
-                </div>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>

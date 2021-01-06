@@ -2,6 +2,10 @@
 
 namespace App\Framework;
 
+/**
+ * Class Session
+ * @package App\Framework
+ */
 class Session
 {
     public function __construct()
@@ -31,7 +35,7 @@ class Session
      * @param $value
      * @return bool
      */
-    public function put(string $key, $value)
+    public function put(string $key, $value): bool
     {
         $_SESSION[$key] = $value;
         return isset($_SESSION[$key]);
@@ -66,7 +70,7 @@ class Session
      * @param string $key
      * @return bool
      */
-    public function forget(string $key)
+    public function forget(string $key): bool
     {
         try {
             unset($_SESSION[$key]);

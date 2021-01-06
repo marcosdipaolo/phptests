@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use App\Framework\Auth;
-
 class User extends Model
 {
+    /** @var int $id */
+    private $id;
     /** @var string $username */
-    protected $username;
+    private $username;
     /** @var string $email */
     private $email;
     /** @var string $password */
@@ -52,7 +52,7 @@ class User extends Model
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -64,6 +64,24 @@ class User extends Model
     public function setPassword(string $password): self
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return $this
+     */
+    public function setId(int $id): self
+    {
+        $this->id = $id;
         return $this;
     }
 }
