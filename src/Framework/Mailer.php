@@ -8,7 +8,7 @@ use Swift_SmtpTransport;
 
 class Mailer
 {
-    public static function send(string $subject, string $mailFrom, string $nameFrom, array $to, string $body)
+    public static function send(string $subject, string $mailFrom, string $nameFrom, array $to, string $body): int
     {
         // Create the Transport
         $transport = new Swift_SmtpTransport(getenv('MAIL_HOST'), getenv('MAIL_PORT'));

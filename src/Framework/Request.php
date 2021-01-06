@@ -9,12 +9,12 @@ class Request
         return $this->has($key) ? $_REQUEST[$key] : null;
     }
 
-    public function has(string $key)
+    public function has(string $key): bool
     {
         return isset($_REQUEST[$key]);
     }
 
-    public function all()
+    public function all(): array
     {
         return $_REQUEST;
     }
