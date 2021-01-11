@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\EmailRepository;
+use App\Abstracts\Repositories\EmailAbstractRepository;
 
 class PageController
 {
-    /** @var EmailRepository $emailsRepository */
+    /** @var EmailAbstractRepository $emailsRepository */
     private $emailRepository;
 
-    public function __construct(EmailRepository $emailsRepository)
+    public function __construct()
     {
-        $this->emailRepository = $emailsRepository;
+        $this->emailRepository = app()->get(EmailAbstractRepository::class);
     }
 
     public function index()

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\AuthenticationRepository;
+use App\Abstracts\Repositories\AuthenticationAbstractRepository;
 use Monolog\Logger;
 
 class AuthController
 {
-    /** @var AuthenticationRepository $authenticationRepository */
+    /** @var AuthenticationAbstractRepository $authenticationRepository */
     private $authenticationRepository;
     /** @var Logger $logger */
     private $logger;
 
-    public function __construct(AuthenticationRepository $authenticationRepository)
+    public function __construct()
     {
-        $this->authenticationRepository = $authenticationRepository;
+        $this->authenticationRepository = app()->get(AuthenticationAbstractRepository::class);
         $this->logger = setUpLogger('auth');
     }
 

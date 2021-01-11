@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Models\User;
-use App\Repositories\UserRepository;
 
 class UserController
 {
-    /** @var UserRepository $userRepository */
+    /** @var UserAbstractRepository $userRepository */
     private $userRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
+        $this->userRepository = app()->get(UserAbstractRepository::class);
     }
 
     public function register()

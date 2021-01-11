@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use DB\Connection;
+use App\Abstracts\ConnectionInterface;
 use PDO;
 
 class BaseRepository
@@ -10,8 +10,9 @@ class BaseRepository
     /** @var PDO $connection  */
     protected $connection;
     
-    public function __construct(Connection $connection)
+    public function __construct()
     {
+        $connection = app()->get(ConnectionInterface::class);
         $this->connection = $connection->getPdo();
     }
 }

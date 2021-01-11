@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Models\User;
 use PDOStatement;
 
-class UserRepository extends BaseRepository
+class UserRepository extends BaseRepository implements UserAbstractRepository
 {
     /**
      * @param User $user

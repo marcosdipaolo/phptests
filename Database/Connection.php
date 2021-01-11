@@ -2,9 +2,10 @@
 
 namespace DB;
 
+use App\Abstracts\ConnectionInterface;
 use PDO;
 
-class Connection
+class Connection implements ConnectionInterface
 {
     /** @var string $dbname */
     private $dbname;
@@ -35,45 +36,5 @@ class Connection
         $pdo = new PDO($dsn, $this->username, $this->password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return  $pdo;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDbname(): string
-    {
-        return $this->dbname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     *  @return string
-     */
-    public function getHost(): string
-    {
-        return $this->host;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPort(): string
-    {
-        return $this->port;
     }
 }

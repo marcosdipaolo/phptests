@@ -1,6 +1,6 @@
 <?php
 
-use App\Framework\Auth;
+use App\Framework\Auth\Auth;
 use App\Framework\Providers\AppServiceProvider;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
@@ -30,13 +30,6 @@ if (!function_exists('auth')) {
     function auth(): Auth
     {
         return new Auth();
-    }
-}
-
-if (!function_exists('session')) {
-    function session(): App\Framework\Session
-    {
-        return app()->get(App\Framework\Session::class);
     }
 }
 

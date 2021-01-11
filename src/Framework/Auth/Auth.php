@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Framework;
-
-use App\Models\User;
+namespace App\Framework\Auth;
 
 class Auth
 {
@@ -20,7 +18,7 @@ class Auth
         return session()->get('user');
     }
 
-    public function login(User $user)
+    public function login(Authenticatable $user)
     {
         session()->put('user', $user);
     }
@@ -28,5 +26,10 @@ class Auth
     public function logout()
     {
         session()->forget('user');
+    }
+
+    public function isUserLoggedIn()
+    {
+        return session()->has('user') && (session()->get('user') instanceof Authenticatable);
     }
 }

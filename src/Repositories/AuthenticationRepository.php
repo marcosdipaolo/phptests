@@ -2,17 +2,18 @@
 
 namespace App\Repositories;
 
+use App\Abstracts\Repositories\AuthenticationAbstractRepository;
+use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Models\User;
-use DB\Connection;
 
-class AuthenticationRepository extends BaseRepository
+class AuthenticationRepository extends BaseRepository implements AuthenticationAbstractRepository
 {
-    /** @var UserRepository $userRepository */
+    /** @var UserAbstractRepository $userRepository */
     private $userRepository;
 
-    public function __construct(Connection $connection, UserRepository $userRepository)
+    public function __construct(UserAbstractRepository $userRepository)
     {
-        parent::__construct($connection);
+        parent::__construct();
         $this->userRepository = $userRepository;
     }
 

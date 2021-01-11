@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class User extends Model
+use App\Framework\Auth\Authenticatable;
+
+class User extends Model implements Authenticatable
 {
     /** @var int $id */
     private $id;
