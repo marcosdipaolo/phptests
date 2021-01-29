@@ -26,13 +26,6 @@ if (!function_exists('app')) {
     }
 }
 
-if (!function_exists('auth')) {
-    function auth(): Auth
-    {
-        return new Auth();
-    }
-}
-
 if (!function_exists('slug')) {
     function slug(string $text): string
     {

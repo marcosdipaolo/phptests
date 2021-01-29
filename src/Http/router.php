@@ -10,7 +10,7 @@ return [
     ],
     "post" => [
         ['/mail', 'MailController@mail'],
-        ['/register', 'UserController@register'],
+        ['/register', 'AuthController@register'],
         ['/login', 'AuthController@login']
     ],
 ];

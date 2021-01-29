@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\AuthenticationAbstractRepository;
+use App\Abstracts\Repositories\UserAbstractRepository;
+use DB\Connection;
+use MDP\Auth\Auth;
+use MDP\Auth\Authenticatable;
 use Monolog\Logger;
 
 class AuthController
@@ -11,11 +16,37 @@ class AuthController
     private $authenticationRepository;
     /** @var Logger $logger */
     private $logger;
+    /** @var Auth $auth */
+    private $auth;
+   /** @var UserAbstractRepository $userRepository */
+    private $userRepository;
+    /** @var ConnectionInterface $conn */
+    private $conn;
 
     public function __construct()
     {
+        $this->userRepository = app()->get(UserAbstractRepository::class);
+        $this->conn = app()->get(ConnectionInterface::class);
         $this->authenticationRepository = app()->get(AuthenticationAbstractRepository::class);
         $this->logger = setUpLogger('auth');
+        $this->auth = auth($this->conn->getPdo());
+    }
+
+    public function register()
+    {
+        try {
+            $this->auth->register(
+                request('username'), $email = request('email'), request('password')
+            );
+            /** @var Authenticatable $user */
+            $user = $this->userRepository->findByEmail($email);
+            auth()->login($user);
+            return render('index', [
+                'success' => 'User registered'
+            ]);
+        } catch (\Throwable $e) {
+            return render('auth.register', ['danger', 'Snap!, ' . $e->getMessage()]);
+        }
     }
 
     public function login()
@@ -24,11 +55,14 @@ class AuthController
             if ($this->authenticationRepository->exceededThrottle(getRealIpAddr())) {
                 redirect('/login', ['danger' => 'You\'ve been blocked. Please wait a minute.']);
             }
-            if ($user = $this->authenticationRepository->authenticate(
-                request('email'),
-                request('password')
-            )
+            if ($this->auth->check(
+                    $email = request('email'),
+                    request('password')
+                )
             ) {
+
+                /** @var Authenticatable $user */
+                $user = $this->userRepository->findByEmail($email);
                 auth()->login($user);
                 redirect('/', ['success' => 'You\'ve been loggedd in!']);
                 return true;

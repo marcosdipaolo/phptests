@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Framework\Auth\Authenticatable;
+use MDP\Auth\Authenticatable;
 
 class User extends Model implements Authenticatable
 {

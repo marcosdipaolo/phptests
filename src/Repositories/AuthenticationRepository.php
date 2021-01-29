@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Abstracts\Repositories\AuthenticationAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
-use App\Models\User;
 
 class AuthenticationRepository extends BaseRepository implements AuthenticationAbstractRepository
 {
@@ -15,24 +14,6 @@ class AuthenticationRepository extends BaseRepository implements AuthenticationA
     {
         parent::__construct();
         $this->userRepository = $userRepository;
-    }
-
-    /**
-     * @param string $email
-     * @param string $password
-     * @return User|bool
-     */
-    public function authenticate(string $email, string $password)
-    {
-        $user = $this->userRepository->findByEmail($email);
-        if ($user) {
-            $authenticated = password_verify($password, $user->getPassword());
-            if ($authenticated) {
-                return $user;
-            }
-            return false;
-        }
-        return false;
     }
 
     public function createFailedLoginAttemp()

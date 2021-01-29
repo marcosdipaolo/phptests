@@ -49,7 +49,7 @@
                     <div class="modal-content">
                         <form action="/mail" method="POST">
                             <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
+                                <h5 class="modal-title">Enter your email data</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -58,7 +58,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
                                     <input type="text" class="form-control" id="name" name="name"
-                                           aria-describedby="nameHelp" placeholder="Enter email">
+                                           aria-describedby="nameHelp" placeholder="Enter name">
                                     <small id="nameHelp" class="form-text text-muted">We'll never share your email with
                                         anyone else.</small>
                                 </div>

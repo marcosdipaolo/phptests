@@ -8,22 +8,6 @@ use PDOStatement;
 
 class UserRepository extends BaseRepository implements UserAbstractRepository
 {
-    /**
-     * @param User $user
-     * @return User
-     */
-    public function save(User $user): User
-    {
-        $sql = /** @lang SQL */ "INSERT INTO `users` (`username`, `email`, `password`) 
-            VALUES (:username, :email, :password)";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute([
-            ':username' => $user->getUsername(),
-            ':email' => $user->getEmail(),
-            ':password' => $user->getPassword()
-        ]);
-        return $this->get($this->connection->lastInsertId());
-    }
 
     /**
      * @param int $id

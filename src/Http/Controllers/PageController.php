@@ -16,6 +16,7 @@ class PageController
 
     public function index()
     {
+
         return render('index');
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Abstracts\Repositories\EmailAbstractRepository;
-use App\Framework\Mailer;
+use MDP\Mailer\Mailer;
 use App\Models\User;
 
 class MailController
@@ -31,7 +31,7 @@ class MailController
             $this->emailRepository
                 ->saveEmail(compact('to', 'name', 'body', 'subject'))
             ) {
-                Mailer::send(
+                mailer()->send(
                     $subject,
                     $loggedUser->getEmail(),
                     $name,
