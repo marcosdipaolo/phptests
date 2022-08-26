@@ -1,14 +1,12 @@
 <?php
 
-use App\Framework\Auth\Auth;
 use App\Framework\Providers\AppServiceProvider;
-use League\Container\Container;
-use League\Container\ReflectionContainer;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use MDP\Container\Container;
 
 if (!function_exists('env')) {
-    function env(string $key)
+    function env(string $key): bool|array|string
     {
         $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../php-tests/');
         $dotenv->load();
@@ -19,10 +17,7 @@ if (!function_exists('env')) {
 if (!function_exists('app')) {
     function app(): Container
     {
-        $app = new Container();
-        $app->delegate(new ReflectionContainer);
-        $app->addServiceProvider(AppServiceProvider::class);
-        return $app;
+        return AppServiceProvider::register();
     }
 }
 
@@ -59,11 +54,16 @@ function on_shut_down()
         isset(error_get_last()['message']) &&
         (error_get_last()['type'] == E_ERROR)
     ) {
-        return render('error.errors', [
-            'code' => 500,
-            'message' => error_get_last()['message']
-        ]);
+        try {
+            return render('error.errors', [
+                'code' => 500,
+                'message' => error_get_last()['message']
+            ]);
+        } catch(\Throwable $e) {
+            //
+        }
     }
+    return null;
 }
 
 

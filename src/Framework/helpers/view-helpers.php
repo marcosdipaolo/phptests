@@ -45,7 +45,7 @@ if (!function_exists('render')) {
         } catch (Throwable $e) {
             return app()
                 ->get(PageController::class)
-                ->error($e->getCode(), $e->getMessage());
+                ->error($e->getCode(), $e->getTraceAsString());
         }
     }
 }

@@ -12,22 +12,15 @@ use Monolog\Logger;
 
 class AuthController
 {
-    /** @var AuthenticationAbstractRepository $authenticationRepository */
-    private $authenticationRepository;
-    /** @var Logger $logger */
-    private $logger;
-    /** @var Auth $auth */
-    private $auth;
-   /** @var UserAbstractRepository $userRepository */
-    private $userRepository;
-    /** @var ConnectionInterface $conn */
-    private $conn;
+    private Logger $logger;
+    private Auth $auth;
 
-    public function __construct()
+    public function __construct(
+        private UserAbstractRepository $userRepository,
+        private ConnectionInterface $conn,
+        private AuthenticationAbstractRepository $authenticationRepository
+    )
     {
-        $this->userRepository = app()->get(UserAbstractRepository::class);
-        $this->conn = app()->get(ConnectionInterface::class);
-        $this->authenticationRepository = app()->get(AuthenticationAbstractRepository::class);
         $this->logger = setUpLogger('auth');
         $this->auth = auth($this->conn->getPdo());
     }
@@ -67,7 +60,7 @@ class AuthController
                 redirect('/', ['success' => 'You\'ve been loggedd in!']);
                 return true;
             }
-            $this->authenticationRepository->createFailedLoginAttemp();
+            $this->authenticationRepository->createFailedLoginAttempt();
             redirect('/login', ['danger' => 'There is no user with those credentials']);
         } catch (\Throwable $e) {
             $this->logger->info($e->getMessage());

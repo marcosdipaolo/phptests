@@ -2,7 +2,7 @@
 <main class="d-flex content">
     <div class="error text-center">
         <h1><?= $code ?? '' ?></h1>
-        <p>...<?= strtolower($message ?? '') ?>.</p>
+        <p><?= $message ?? '' ?>.</p>
     </div>
 </main>
 <?php render('footer'); ?>

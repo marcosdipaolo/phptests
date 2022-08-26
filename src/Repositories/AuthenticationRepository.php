@@ -2,21 +2,21 @@
 
 namespace App\Repositories;
 
+use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\AuthenticationAbstractRepository;
-use App\Abstracts\Repositories\UserAbstractRepository;
 
 class AuthenticationRepository extends BaseRepository implements AuthenticationAbstractRepository
 {
-    /** @var UserAbstractRepository $userRepository */
-    private $userRepository;
 
-    public function __construct(UserAbstractRepository $userRepository)
+    public function __construct(protected ConnectionInterface $conn)
     {
-        parent::__construct();
-        $this->userRepository = $userRepository;
+        parent::__construct($conn);
     }
 
-    public function createFailedLoginAttemp()
+    /**
+     * @return bool
+     */
+    public function createFailedLoginAttempt(): bool
     {
         $ip = getRealIpAddr();
         $sql = /** @lang SQL */"INSERT INTO failed_login_attemps (`ip_address`) VALUES (:ip)";
@@ -26,7 +26,11 @@ class AuthenticationRepository extends BaseRepository implements AuthenticationA
         ]);
     }
 
-    public function exceededThrottle(string $ip)
+    /**
+     * @param string $ip
+     * @return bool
+     */
+    public function exceededThrottle(string $ip): bool
     {
         $minutes = intval(env('THROTTLE_MINUTES_CONFIG'));
         $attemps = intval(env('THROTTLE_LOGIN_ATTEMPS'));

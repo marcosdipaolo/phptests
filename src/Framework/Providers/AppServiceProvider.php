@@ -10,27 +10,20 @@ use App\Repositories\AuthenticationRepository;
 use App\Repositories\EmailRepository;
 use App\Repositories\UserRepository;
 use DB\Connection;
-use League\Container\Container;
-use League\Container\ServiceProvider\AbstractServiceProvider;
+use MDP\Container\Container;
 
-class AppServiceProvider extends AbstractServiceProvider
+class AppServiceProvider
 {
-    protected $provides = [
-        EmailAbstractRepository::class,
-        UserAbstractRepository::class,
-        AuthenticationAbstractRepository::class,
-        ConnectionInterface::class
-    ];
 
-    public function register()
+    public static function register(): Container
     {
-        /** @var Container $container */
-        $container = $this->getContainer();
-        $container->add(EmailAbstractRepository::class, EmailRepository::class);
-        $container->add(UserAbstractRepository::class, UserRepository::class);
-        $container->add(
+        $container = new Container();
+        $container->set(EmailAbstractRepository::class, EmailRepository::class);
+        $container->set(UserAbstractRepository::class, UserRepository::class);
+        $container->set(
             AuthenticationAbstractRepository::class, AuthenticationRepository::class
-        )->addArgument(UserAbstractRepository::class);
-        $container->add(ConnectionInterface::class, Connection::class);
+        );
+        $container->set(ConnectionInterface::class, Connection::class);
+        return $container;
     }
 }

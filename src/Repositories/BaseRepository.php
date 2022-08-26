@@ -7,12 +7,10 @@ use PDO;
 
 class BaseRepository
 {
-    /** @var PDO $connection  */
-    protected $connection;
+    protected \PDO $connection;
     
-    public function __construct()
+    public function __construct(protected ConnectionInterface $conn)
     {
-        $connection = app()->get(ConnectionInterface::class);
-        $this->connection = $connection->getPdo();
+        $this->connection = $conn->getPdo();
     }
 }

@@ -8,19 +8,14 @@ use App\Models\User;
 
 class MailController
 {
-    /** @var EmailAbstractRepository $emailRepository */
-    private $emailRepository;
 
-    public function __construct()
-    {
-        $this->emailRepository = app()->get(EmailAbstractRepository::class);
-    }
+    public function __construct(private EmailAbstractRepository $emailRepository) {}
 
     public function mail()
     {
         /** @var User | null $user */
         if (!$loggedUser = auth()->user()) {
-            return redirect('/login');
+            redirect('/login');
         }
         try {
             $subject = request('subject');
@@ -38,7 +33,7 @@ class MailController
                     [$to],
                     $body
                 );
-                return redirect('/mail', ['success' => 'Mail sent and stored']);
+                redirect('/mail', ['success' => 'Mail sent and stored']);
             }
             throw new \Exception('Unknown Error');
         } catch (\Throwable $e) {

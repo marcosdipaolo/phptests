@@ -6,17 +6,11 @@ use App\Abstracts\Repositories\EmailAbstractRepository;
 
 class PageController
 {
-    /** @var EmailAbstractRepository $emailsRepository */
-    private $emailRepository;
 
-    public function __construct()
-    {
-        $this->emailRepository = app()->get(EmailAbstractRepository::class);
-    }
+    public function __construct(private EmailAbstractRepository $emailRepository) {}
 
     public function index()
     {
-
         return render('index');
     }
 
