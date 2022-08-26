@@ -29,7 +29,6 @@ class MailController
                 mailer()->send(
                     $subject,
                     $loggedUser->getEmail(),
-                    $name,
                     [$to],
                     $body
                 );

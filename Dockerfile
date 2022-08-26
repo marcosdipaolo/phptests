@@ -14,6 +14,7 @@ RUN apt-get update && \
     cron \
     libxml2-dev \
     libzip-dev \
+    zip \
     sqlite3 \
     libsqlite3-dev \
     && docker-php-ext-configure gd \

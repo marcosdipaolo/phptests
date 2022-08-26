@@ -14,16 +14,19 @@ use MDP\Container\Container;
 
 class AppServiceProvider
 {
+    private static array $bindings = [
+        EmailAbstractRepository::class => EmailRepository::class,
+        UserAbstractRepository::class => UserRepository::class,
+        AuthenticationAbstractRepository::class => AuthenticationRepository::class,
+        ConnectionInterface::class => Connection::class
+    ];
 
-    public static function register(): Container
+    public static function registerContainer(): Container
     {
         $container = new Container();
-        $container->set(EmailAbstractRepository::class, EmailRepository::class);
-        $container->set(UserAbstractRepository::class, UserRepository::class);
-        $container->set(
-            AuthenticationAbstractRepository::class, AuthenticationRepository::class
-        );
-        $container->set(ConnectionInterface::class, Connection::class);
+        foreach (self::$bindings as $abstract => $concrete) {
+            $container->set($abstract, $concrete);
+        }
         return $container;
     }
 }

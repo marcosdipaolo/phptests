@@ -17,7 +17,7 @@ if (!function_exists('env')) {
 if (!function_exists('app')) {
     function app(): Container
     {
-        return AppServiceProvider::register();
+        return AppServiceProvider::registerContainer();
     }
 }
 
