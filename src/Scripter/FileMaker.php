@@ -2,7 +2,7 @@
 
 namespace App\Scripter;
 
-use App\Models\Model;
+use App\Entities\Model;
 use Nette\PhpGenerator\PhpFile;
 
 class FileMaker

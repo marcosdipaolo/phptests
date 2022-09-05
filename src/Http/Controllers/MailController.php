@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Abstracts\Repositories\EmailAbstractRepository;
 use MDP\Mailer\Mailer;
-use App\Models\User;
+use App\Entities\User;
 
 class MailController
 {

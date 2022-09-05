@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Abstracts\ConnectionInterface;
-use App\Abstracts\Repositories\AuthenticationAbstractRepository;
+use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
-use DB\Connection;
 use MDP\Auth\Auth;
 use MDP\Auth\Authenticatable;
 use Monolog\Logger;
@@ -18,11 +17,11 @@ class AuthController
     public function __construct(
         private UserAbstractRepository $userRepository,
         private ConnectionInterface $conn,
-        private AuthenticationAbstractRepository $authenticationRepository
+        private FailedLoginAttemptAbstractRepository $authenticationRepository
     )
     {
         $this->logger = setUpLogger('auth');
-        $this->auth = auth($this->conn->getPdo());
+        $this->auth = auth($this->conn->getEntityManager());
     }
 
     public function register()

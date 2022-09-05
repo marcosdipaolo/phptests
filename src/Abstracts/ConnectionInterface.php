@@ -2,7 +2,12 @@
 
 namespace App\Abstracts;
 
+use Doctrine\ORM\EntityManager;
+
 interface ConnectionInterface
 {
-    public function getPdo(): \PDO;
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager(): EntityManager;
 }

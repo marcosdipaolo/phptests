@@ -3,14 +3,17 @@
 namespace App\Repositories;
 
 use App\Abstracts\ConnectionInterface;
-use PDO;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
-class BaseRepository
+abstract class BaseRepository extends EntityRepository
 {
-    protected \PDO $connection;
+    protected EntityManager $em;
     
-    public function __construct(protected ConnectionInterface $conn)
+    public function __construct(string $class)
     {
-        $this->connection = $conn->getPdo();
+        $conn = app()->get(ConnectionInterface::class);
+        $this->em = $conn->getEntityManager();
+        parent::__construct($this->em, $this->em->getClassMetadata($class));
     }
 }

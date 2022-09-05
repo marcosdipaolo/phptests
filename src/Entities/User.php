@@ -1,19 +1,29 @@
 <?php
 
-namespace App\Models;
+namespace App\Entities;
 
+use App\Entities\Traits\HasTimestamps;
+use App\Entities\Traits\Identifiable;
+use DateTime;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\Table;
 use MDP\Auth\Authenticatable;
 
-class User extends Model implements Authenticatable
+#[Entity]
+#[Table("users")]
+class User implements Authenticatable
 {
-    /** @var int $id */
-    private $id;
-    /** @var string $username */
-    private $username;
-    /** @var string $email */
-    private $email;
-    /** @var string $password */
-    private $password;
+    use Identifiable, HasTimestamps;
+
+    #[Column]
+    private string $username;
+    #[Column]
+    private string $email;
+    #[Column]
+    private string $password;
+    #[Column(name: "verified_at")]
+    private DateTime $verifiedAt;
 
     /**
      * @return string

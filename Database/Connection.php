@@ -3,113 +3,38 @@
 namespace DB;
 
 use App\Abstracts\ConnectionInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\ORMSetup;
 use PDO;
 
 class Connection implements ConnectionInterface
 {
-    private string $dbname;
-    private string $username;
-    private string $password;
-    private string $host;
-    private string $port;
+    private EntityManager $entityManager;
 
+    /**
+     * @throws ORMException
+     */
     public function __construct()
     {
-        $this->dbname = $_ENV['DB_NAME'];
-        $this->username = $_ENV['DB_USER'];
-        $this->password = $_ENV['DB_PASSWORD'];
-        $this->host = $_ENV['DB_HOST'];
-        $this->port = $_ENV['DB_PORT'];
+        $this->entityManager = EntityManager::create(
+            [
+                "dbname" => $_ENV['DB_NAME'],
+                "user" => $_ENV['DB_USER'],
+                "password" => $_ENV['DB_PASSWORD'],
+                "host" => $_ENV['DB_HOST'],
+                "port" => $_ENV['DB_PORT'],
+                "driver" => $_ENV["DB_DRIVER"]
+            ],
+            ORMSetup::createAttributeMetadataConfiguration(["../src/Entities"])
+        );
     }
 
     /**
-     * @return PDO
+     * @return EntityManager
      */
-    public function getPdo(): PDO
+    public function getEntityManager(): EntityManager
     {
-        $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname}";
-        $pdo = new PDO($dsn, $this->username, $this->password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        return $pdo;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDbname(): string
-    {
-        return $this->dbname;
-    }
-
-    /**
-     * @param string $dbname
-     */
-    public function setDbname(string $dbname): void
-    {
-        $this->dbname = $dbname;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     */
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHost(): string
-    {
-        return $this->host;
-    }
-
-    /**
-     * @param string $host
-     */
-    public function setHost(string $host): void
-    {
-        $this->host = $host;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPort(): string
-    {
-        return $this->port;
-    }
-
-    /**
-     * @param string $port
-     */
-    public function setPort(string $port): void
-    {
-        $this->port = $port;
+        return $this->entityManager;
     }
 }

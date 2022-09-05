@@ -15,7 +15,6 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^5.4",
-        "swiftmailer/swiftmailer": "^6.3",
         "robmorgan/phinx": "^0.12.12",
         "symfony/yaml": "^6.1",
         "nesbot/carbon": "^2.61",
@@ -26,7 +25,11 @@
         "marcosdipaolo/mailer": "^1.0",
         "nette/php-generator": "^4.0",
         "marcosdipaolo/container": "dev-master",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "doctrine/orm": "^2.13",
+        "doctrine/dbal": "^3.4",
+        "doctrine/migrations": "^3.5",
+        "symfony/cache": "^6.1"
     },
     "autoload": {
         "psr-4": {

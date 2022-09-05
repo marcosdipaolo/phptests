@@ -8,10 +8,10 @@ interface EmailAbstractRepository
      * @param array $email
      * @return bool
      */
-    public function saveEmail(array $email);
+    public function saveEmail(array $email): bool;
 
     /**
      * @return array
      */
-    public function fetchAll();
+    public function fetchAll(): array;
 }

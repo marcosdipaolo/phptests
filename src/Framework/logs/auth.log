@@ -1,0 +1,1 @@
+[2022-08-29T01:02:22.052607+00:00] auth.INFO: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'phptests.failed_login_attemps' doesn't exist [] []

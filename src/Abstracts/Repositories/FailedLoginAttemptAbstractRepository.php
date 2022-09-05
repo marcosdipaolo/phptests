@@ -2,7 +2,7 @@
 
 namespace App\Abstracts\Repositories;
 
-interface AuthenticationAbstractRepository
+interface FailedLoginAttemptAbstractRepository
 {
 
 }

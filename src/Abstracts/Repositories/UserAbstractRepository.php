@@ -2,7 +2,7 @@
 
 namespace App\Abstracts\Repositories;
 
-use App\Models\User;
+use App\Entities\User;
 
 interface UserAbstractRepository
 {

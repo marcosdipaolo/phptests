@@ -3,11 +3,14 @@
 namespace App\Repositories;
 
 use App\Abstracts\Repositories\UserAbstractRepository;
-use App\Models\User;
-use PDOStatement;
+use App\Entities\User;
 
 class UserRepository extends BaseRepository implements UserAbstractRepository
 {
+    public function __construct()
+    {
+        parent::__construct(User::class);
+    }
 
     /**
      * @param int $id
@@ -15,18 +18,7 @@ class UserRepository extends BaseRepository implements UserAbstractRepository
      */
     public function get(int $id): User
     {
-        $sql = /** @lang SQL */ "SELECT * FROM users WHERE id = {$id}";
-
-        /** @var PDOStatement $stmt */
-        $stmt = $this->connection->query($sql);
-
-        /** @var array $user */
-        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        return (new User)
-            ->setId($user['id'])
-            ->setUsername($user['username'])
-            ->setEmail($user['email']);
+        return $this->find(User::class, $id);
     }
 
     /**
@@ -35,16 +27,13 @@ class UserRepository extends BaseRepository implements UserAbstractRepository
      */
     public function findByEmail(string $email): ?User
     {
-        $sql = /** @lang SQL */"SELECT * FROM `users` WHERE `email` = '{$email}'";
-        $stmt = $this->connection->query($sql);
-        $data = $stmt->fetch();
-        if ($data) {
-            return (new User)
-                ->setId($data['id'])
-                ->setEmail($data['email'])
-                ->setUsername($data['username'])
-                ->setPassword($data['password']);
-        }
-        return null;
+        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder
+            ->select("u")
+            ->from(User::class, "u")
+            ->where("u.email = :email");
+        $queryBuilder->setParameter("email", $email);
+        $query = $queryBuilder->getQuery();
+        return $query->getResult();
     }
 }
