@@ -7,10 +7,14 @@ use App\Entities\Traits\Identifiable;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 use Doctrine\ORM\Mapping\Table;
 use MDP\Auth\Authenticatable;
 
 #[Entity]
+#[HasLifecycleCallbacks]
 #[Table("users")]
 class User implements Authenticatable
 {
@@ -22,7 +26,7 @@ class User implements Authenticatable
     private string $email;
     #[Column]
     private string $password;
-    #[Column(name: "verified_at")]
+    #[Column(name: "verified_at", nullable: true)]
     private DateTime $verifiedAt;
 
     /**
@@ -88,6 +92,22 @@ class User implements Authenticatable
     }
 
     /**
+     * @return DateTime
+     */
+    public function getVerifiedAt(): DateTime
+    {
+        return $this->verifiedAt;
+    }
+
+    /**
+     * @param DateTime $verifiedAt
+     */
+    public function setVerifiedAt(DateTime $verifiedAt): void
+    {
+        $this->verifiedAt = $verifiedAt;
+    }
+
+    /**
      * @param int $id
      * @return $this
      */
@@ -95,5 +115,16 @@ class User implements Authenticatable
     {
         $this->id = $id;
         return $this;
+    }
+
+    #[PrePersist]
+    public function onCreate(): void {
+        $this->setCreatedAt(new \DateTime('now'));
+        $this->setUpdatedAt(new \DateTime('now'));
+    }
+
+    #[PreUpdate]
+    public function onUpdate(): void {
+        $this->setUpdatedAt(new \DateTime('now'));
     }
 }

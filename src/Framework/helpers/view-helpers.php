@@ -31,8 +31,13 @@ if (!function_exists('render')) {
      * @param string $viewPath
      * @param array $data
      * @return mixed
+     * @throws ReflectionException
+     * @throws \MDP\Container\Exceptions\ContainerException
+     * @throws \MDP\Container\Exceptions\NotFoundException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    function render(string $viewPath, array $data = [])
+    function render(string $viewPath, array $data = []): mixed
     {
         try {
             setFlashMessages($data);

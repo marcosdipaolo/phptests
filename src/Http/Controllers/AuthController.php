@@ -15,13 +15,13 @@ class AuthController
     private Auth $auth;
 
     public function __construct(
-        private UserAbstractRepository $userRepository,
-        private ConnectionInterface $conn,
-        private FailedLoginAttemptAbstractRepository $authenticationRepository
+        private readonly UserAbstractRepository $userRepository,
+        private readonly ConnectionInterface $conn,
+        private readonly FailedLoginAttemptAbstractRepository $authenticationRepository
     )
     {
         $this->logger = setUpLogger('auth');
-        $this->auth = auth($this->conn->getEntityManager());
+        $this->auth = auth($this->conn->getPDO());
     }
 
     public function register()
@@ -37,7 +37,7 @@ class AuthController
                 'success' => 'User registered'
             ]);
         } catch (\Throwable $e) {
-            return render('auth.register', ['danger', 'Snap!, ' . $e->getMessage()]);
+            return render('auth.register', ['danger' => 'Snap!, ' . $e->getMessage()]);
         }
     }
 

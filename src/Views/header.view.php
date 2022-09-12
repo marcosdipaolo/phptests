@@ -9,8 +9,7 @@
 </head>
 <body>
 <header>
-    <?php /** @var Array $data */ ?>
-    <?php render('error.messages', $data) ?>
+    <?php render('error.messages') ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">Navbar</a>

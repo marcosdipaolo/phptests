@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\EmailAbstractRepository;
 use App\Entities\Email;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 
 class EmailRepository extends BaseRepository implements EmailAbstractRepository
 {
@@ -16,8 +17,8 @@ class EmailRepository extends BaseRepository implements EmailAbstractRepository
     /**
      * @param array $email
      * @return bool
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function saveEmail(array $email): bool
     {
@@ -25,15 +26,7 @@ class EmailRepository extends BaseRepository implements EmailAbstractRepository
         $email = new Email($to, $subject, $body);
         $this->em->persist($email);
         $this->em->flush();
-
-//        $sql = /** @lang SQL */ "INSERT INTO `emails` (`to`, `subject`, `body`, `created_at`) VALUES (:to, :subject, :body, :created_at)";
-//        $stmt = $this->connection->prepare($sql);
-//        return $stmt->execute([
-//            ':to' => $email['to'],
-//            ':subject' => $email['subject'],
-//            ':body' => $email['body'],
-//            ':created_at' => Carbon::now()->toDateTimeString()
-//        ]);
+        return true;
     }
 
     public function fetchAll(): array

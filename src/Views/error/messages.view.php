@@ -14,12 +14,12 @@ clearFlashMessages();
 ?>
 <script>
     const alert = document.querySelector('.alert');
-    setTimeout(function(){
-        if (alert) {
+    if (alert) {
+        setTimeout(function(){
             alert.style.opacity = "0";
-        }
-    }, 2000);
-    setTimeout(function(){
-        alert.parentNode.removeChild(alert);
-    }, 3000);
+        }, 2000);
+        setTimeout(function(){
+            alert.parentNode.removeChild(alert);
+        }, 3000);
+    }
 </script>

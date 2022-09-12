@@ -3,6 +3,7 @@
 use App\Framework\Providers\AppServiceProvider;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Level;
 use MDP\Container\Container;
 
 if (!function_exists('env')) {
@@ -42,7 +43,7 @@ if (!function_exists('setUpLogger')) {
     {
         $log = new Logger($name);
         $filename = slug($name);
-        $log->pushHandler(new StreamHandler(__DIR__ . "/../logs/{$filename}.log", Logger::INFO));
+        $log->pushHandler(new StreamHandler(__DIR__ . "/../logs/{$filename}.log", Level::Info));
         return $log;
     }
 }
