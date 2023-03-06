@@ -9,9 +9,9 @@ use MDP\Container\Container;
 if (!function_exists('env')) {
     function env(string $key): bool|array|string
     {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../php-tests/');
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
         $dotenv->load();
-        return getenv($key);
+        return $_ENV[$key];
     }
 }
 

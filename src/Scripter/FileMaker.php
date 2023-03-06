@@ -10,7 +10,7 @@ class FileMaker
     const MODEL_NAMESPACE = 'App\Models';
     const MODEL_PATH = 'src/Models/';
     
-    public static function make($namespace, $name)
+    public static function make($namespace, $name): void
     {
         $file = new PhpFile;
         $namespace = $file->addNamespace($namespace);

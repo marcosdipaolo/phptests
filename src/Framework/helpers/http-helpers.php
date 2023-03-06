@@ -1,6 +1,7 @@
 <?php
 
 use App\Framework\Request;
+use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('routeIs')) {
     /**
@@ -45,14 +46,14 @@ if (!function_exists('get')) {
 }
 
 if (!function_exists('baseUrl')) {
-    function baseUrl()
+    function baseUrl(): bool|array|string
     {
         return env('BASE_URL');
     }
 }
 
 if (!function_exists('redirect')) {
-    function redirect(string $uri, $data = [])
+    #[NoReturn] function redirect(string $uri, $data = []): void
     {
         setFlashMessages($data);
         header("Location: " . baseUrl() . $uri, true, 302);

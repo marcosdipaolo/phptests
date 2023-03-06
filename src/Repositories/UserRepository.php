@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Entities\User;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class UserRepository extends BaseRepository implements UserAbstractRepository
 {
@@ -24,6 +26,8 @@ class UserRepository extends BaseRepository implements UserAbstractRepository
     /**
      * @param string $email
      * @return User|null
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function findByEmail(string $email): ?User
     {
@@ -34,6 +38,6 @@ class UserRepository extends BaseRepository implements UserAbstractRepository
             ->where("u.email = :email");
         $queryBuilder->setParameter("email", $email);
         $query = $queryBuilder->getQuery();
-        return $query->getResult();
+        return $query->getSingleResult();
     }
 }

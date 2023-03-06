@@ -27,7 +27,7 @@ class Connection implements ConnectionInterface
             "driver" => $_ENV["DB_DRIVER"],
             "pdo_driver" => $_ENV["PDO_DRIVER"]
         ];
-        $this->entityManager = EntityManager::create(
+    $this->entityManager = EntityManager::create(
             $this->connectionData,
             ORMSetup::createAttributeMetadataConfiguration([__DIR__ . "/../src/Entities"])
         );

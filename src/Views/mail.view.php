@@ -25,14 +25,22 @@
                 </thead>
                 <tbody>
                 <?php
-                foreach ($emails as $email) {
+                /**
+                 * @var $email App\Entities\Email
+                 */
+                foreach ($emails as $key => $email) {
                     ?>
                     <tr>
-                        <th scope="row"><?= $email['id'] ?></th>
-                        <td><?= $email['to'] ?></td>
-                        <td><?= $email['subject'] ?></td>
-                        <td><?= $email['body'] ?></td>
-                        <td></td>
+                        <th scope="row"><?= $email->getId() ?></th>
+                        <td><?= $email->getTo() ?></td>
+                        <td><?= $email->getSubject() ?></td>
+                        <td><?= $email->getBody() ?></td>
+                        <td>
+                            <form action="/mail-delete" method="POST">
+                                <input name="emailId" type="hidden" value="<?= $email->getId() ?>">
+                                <button type="submit"><i data-feather="trash-2"></i></button>
+                            </form>
+                        </td>
                     </tr>
                     <?php
                 }
@@ -56,21 +64,21 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Name</label>
+                                    <label for="name">Name</label>
                                     <input type="text" class="form-control" id="name" name="name"
                                            aria-describedby="nameHelp" placeholder="Enter name">
                                     <small id="nameHelp" class="form-text text-muted">We'll never share your email with
                                         anyone else.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email</label>
+                                    <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" name="email"
                                            aria-describedby="emailHelp" placeholder="Enter email">
                                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with
                                         anyone else.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Subject</label>
+                                    <label for="subject">Subject</label>
                                     <input type="text" class="form-control" id="subject" name="subject"
                                            aria-describedby="subjectHelp" placeholder="Subject">
                                     <small id="subjectHelp" class="form-text text-muted">We'll never share your email
@@ -78,7 +86,7 @@
                                         anyone else.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleTextarea">Body</label>
+                                    <label for="body">Body</label>
                                     <textarea class="form-control" id="body" name="body" rows="3"></textarea>
                                 </div>
 

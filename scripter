@@ -8,12 +8,16 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// Lets get rid of script name
 array_shift($argv);
 $argc--;
 
+if (count($argv) === 1 && $argv[0] === "migrate") {
+     echo shell_exec("vendor/bin/doctrine-migrations migrate");
+     return;
+};
+
 $method = explode(':', $argv[0])[0];
-$object = isset(explode(':', $argv[0])[1]) ? explode(':', $argv[0])[1] : null;
+$object = explode(':', $argv[0])[1] ?? null;
 $name = $argv[1];
 
 $method($object, $name);

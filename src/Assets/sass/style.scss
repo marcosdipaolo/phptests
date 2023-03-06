@@ -52,3 +52,20 @@ li.divider {
 	padding: 0;
 	margin: 0;
 }
+
+body > div > main > table > tbody > tr > td > form > button {
+	border: none;
+	background-color: transparent;
+	&:focus, &:focus-visible {
+		outline: none;
+	}
+
+	svg {
+		transition: transform 30ms ease-in-out;
+		&:hover {
+			stroke: #0b6bdf;
+			transform: translateY(-3px);
+			cursor: pointer;
+		}
+	}
+}

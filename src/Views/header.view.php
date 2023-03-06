@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="<?php echo asset('css/vendor/bootstrap.min.css') ?>">
     <link rel="stylesheet" href="<?php echo asset('css/style.css') ?>">
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
 <header>

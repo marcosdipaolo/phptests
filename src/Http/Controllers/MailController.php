@@ -9,7 +9,7 @@ use App\Entities\User;
 class MailController
 {
 
-    public function __construct(private EmailAbstractRepository $emailRepository) {}
+    public function __construct(private readonly EmailAbstractRepository $emailRepository) {}
 
     public function mail()
     {
@@ -43,6 +43,12 @@ class MailController
                 ]
             );
         }
+    }
+
+    public function deleteMail()
+    {
+        $this->emailRepository->removeEmail(request("emailId"));
+        redirect("/mail");
     }
 
 }

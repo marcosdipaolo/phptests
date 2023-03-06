@@ -15,7 +15,6 @@
     ],
     "require": {
         "vlucas/phpdotenv": "^5.4",
-        "robmorgan/phinx": "^0.12.12",
         "symfony/yaml": "^6.1",
         "nesbot/carbon": "^2.61",
         "monolog/monolog": "^3.2",

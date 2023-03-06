@@ -7,7 +7,11 @@ use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
 use MDP\Auth\Auth;
 use MDP\Auth\Authenticatable;
+use MDP\Container\Exceptions\ContainerException;
+use MDP\Container\Exceptions\NotFoundException;
 use Monolog\Logger;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class AuthController
 {

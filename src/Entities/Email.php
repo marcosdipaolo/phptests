@@ -15,15 +15,17 @@ class Email
     use Identifiable, HasTimestamps;
 
     public function __construct(
-        #[Column]
+        #[Column(name: "`to`", type: "string", columnDefinition: "VARCHAR(255) NOT NULL")]
         private string $to,
-        #[Column]
+        #[Column(name: "`subject`", type: "string", columnDefinition: "VARCHAR(255) NOT NULL")]
         private string $subject,
-        #[Column]
+        #[Column(name: "`body`", type: "string", columnDefinition: "VARCHAR(255) NOT NULL")]
         private string $body,
     ) {}
 
-
+    public function getId(): int {
+        return $this->id;
+    }
 
     /**
      * @return string

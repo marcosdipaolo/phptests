@@ -6,6 +6,7 @@
 <script src="<?= asset('js/app.js') ?>"></script>
 <script>
     const modal = document.querySelector('.modal');
+    feather.replace();
 </script>
 </body>
 </html>

@@ -14,4 +14,10 @@ interface EmailAbstractRepository
      * @return array
      */
     public function fetchAll(): array;
+
+    /**
+     * @param string $id
+     * @return void
+     */
+    public function removeEmail(string $id): void;
 }
