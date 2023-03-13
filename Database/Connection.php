@@ -1,6 +1,6 @@
 <?php
 
-namespace DB;
+namespace MDP\DB;
 
 use App\Abstracts\ConnectionInterface;
 use Doctrine\ORM\EntityManager;
@@ -43,7 +43,8 @@ class Connection implements ConnectionInterface
 
     public function getPDO(): \PDO {
         return new \PDO(
-            "{$this->connectionData["pdo_driver"]}:host={$this->connectionData["host"]};port={$this->connectionData["port"]};dbname={$this->connectionData["dbname"]}",
+            "{$this->connectionData["pdo_driver"]}:host={$this->connectionData["host"]};" .
+            "port={$this->connectionData["port"]};dbname={$this->connectionData["dbname"]}",
             $this->connectionData["user"],
             $this->connectionData["password"]
         );

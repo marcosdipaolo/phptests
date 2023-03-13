@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Framework\Providers;
+namespace MDP\Framework\Providers;
 
 use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
@@ -9,7 +9,7 @@ use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Repositories\FailedLoginAttemptRepository;
 use App\Repositories\EmailRepository;
 use App\Repositories\UserRepository;
-use DB\Connection;
+use MDP\DB\Connection;
 use MDP\Container\Container;
 
 class AppServiceProvider

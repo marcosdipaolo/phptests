@@ -10,7 +10,7 @@ return [
     ],
 
     'migrations_paths' => [
-        'DB\\Migrations' => '/Database/Migrations',
+        'MDP\\DB\\Migrations' => '/Database/Migrations',
     ],
 
     'all_or_nothing' => true,

@@ -45,7 +45,7 @@ class AuthController
         }
     }
 
-    public function login()
+    public function login(): bool
     {
         try {
             if ($this->authenticationRepository->exceededThrottle(getRealIpAddr())) {
@@ -61,13 +61,13 @@ class AuthController
                 $user = $this->userRepository->findByEmail($email);
                 auth()->login($user);
                 redirect('/', ['success' => 'You\'ve been loggedd in!']);
-                return true;
             }
             $this->authenticationRepository->createFailedLoginAttempt();
             redirect('/login', ['danger' => 'There is no user with those credentials']);
         } catch (\Throwable $e) {
-            $this->logger->info($e->getMessage());
-            return render('auth.login', ['danger' => $e->getMessage()]);
+            $this->logger->error($e->getMessage());
+            setFlashMessages(['danger' => $e->getMessage()]);
+            return render('auth.login');
         }
     }
 

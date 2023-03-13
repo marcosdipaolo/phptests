@@ -1,6 +1,6 @@
 <?php
 
-use App\Framework\Request;
+use MDP\Framework\Request;
 use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('routeIs')) {
@@ -8,7 +8,7 @@ if (!function_exists('routeIs')) {
      * @param string $route
      * @return bool
      */
-    function routeIs(string $route)
+    function routeIs(string $route): bool
     {
         return '/' . $route === $_SERVER['REQUEST_URI'];
     }
@@ -26,20 +26,20 @@ if (!function_exists('request')) {
 }
 
 if (!function_exists('post')) {
-    function post(string $key = null)
+    function post(string $key = null): mixed
     {
         if ($key) {
-            return isset($_POST[$key]) ? $_POST[$key] : null;
+            return $_POST[$key] ?? null;
         }
         return $_POST;
     }
 }
 
 if (!function_exists('get')) {
-    function get(string $key = null)
+    function get(string $key = null): mixed
     {
         if ($key) {
-            return isset($_GET[$key]) ? $_GET[$key] : null;
+            return $_GET[$key] ?? null;
         }
         return $_GET;
     }

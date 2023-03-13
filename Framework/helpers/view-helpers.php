@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use MDP\Container\Exceptions\ContainerException;
+use MDP\Container\Exceptions\NotFoundException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 if (!function_exists("asset")) {
     function asset(string $path = null): string
@@ -19,7 +23,7 @@ if (!function_exists('setFlashMessages')) {
         $types = ['danger' => '<strong>Oh Snap!! </strong>', 'success' => '<strong>Success!! </strong>'];
         foreach ($types as $type => $heading) {
             if (isset($data[$type])) {
-                session()->put($type, $heading .    $data[$type]);
+                session()->put($type, $heading . $data[$type]);
             }
         }
     }
@@ -31,27 +35,16 @@ if (!function_exists('render')) {
      * @param string $viewPath
      * @param array $data
      * @return mixed
-     * @throws ReflectionException
-     * @throws \MDP\Container\Exceptions\ContainerException
-     * @throws \MDP\Container\Exceptions\NotFoundException
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     function render(string $viewPath, array $data = []): mixed
     {
-        try {
-            setFlashMessages($data);
-            $path = str_replace('.', '/', $viewPath);
-            $path =  __DIR__ . "/../../Views/{$path}.view.php";
-            foreach ($data as $key => $value) {
-                $$key = $value;
-            }
-            return require $path;
-        } catch (Throwable $e) {
-            return app()
-                ->get(PageController::class)
-                ->error($e->getCode(), $e->getTraceAsString());
+        setFlashMessages($data);
+        $path = str_replace('.', '/', $viewPath);
+        $path = __DIR__ . "/../../src/Views/{$path}.view.php";
+        foreach ($data as $key => $value) {
+            $$key = $value;
         }
+        return require $path;
     }
 }
 

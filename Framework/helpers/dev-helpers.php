@@ -1,6 +1,9 @@
 <?php
+
+use JetBrains\PhpStorm\NoReturn;
+
 if (!function_exists('dd')) {
-    function dd()
+    #[NoReturn] function dd(): void
     {
         $args = func_get_args();
         call_user_func_array('dump', $args);
@@ -9,7 +12,7 @@ if (!function_exists('dd')) {
 }
 
 if (!function_exists('d')) {
-    function d()
+    function d(): void
     {
         $args = func_get_args();
         call_user_func_array('dump', $args);

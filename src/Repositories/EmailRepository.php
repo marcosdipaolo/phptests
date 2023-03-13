@@ -41,7 +41,9 @@ class EmailRepository extends BaseRepository implements EmailAbstractRepository
      */
     public function removeEmail(string $id): void {
         $email = $this->find(intval($id));
-        $this->em->remove($email);
-        $this->em->flush();
+        if ($email) {
+            $this->em->remove($email);
+            $this->em->flush();
+        }
     }
 }

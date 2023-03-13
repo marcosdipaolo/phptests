@@ -34,13 +34,14 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "DB\\": "Database/"
+            "MDP\\DB\\": "Database/",
+            "MDP\\Framework\\": "Framework/"
         },
         "files": [
-            "src/Framework/helpers/dev-helpers.php",
-            "src/Framework/helpers/http-helpers.php",
-            "src/Framework/helpers/system-helpers.php",
-            "src/Framework/helpers/view-helpers.php"
+            "Framework/helpers/dev-helpers.php",
+            "Framework/helpers/http-helpers.php",
+            "Framework/helpers/system-helpers.php",
+            "Framework/helpers/view-helpers.php"
         ]
     },
     "require-dev": {

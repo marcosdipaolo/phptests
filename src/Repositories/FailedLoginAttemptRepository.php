@@ -4,6 +4,8 @@ namespace App\Repositories;
 use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Entities\FailedLoginAttemp;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 
 class FailedLoginAttemptRepository extends BaseRepository implements FailedLoginAttemptAbstractRepository
 {
@@ -13,11 +15,11 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
     }
 
     /**
-     * @return bool
-     * @throws \Doctrine\ORM\Exception\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
-    public function createFailedLoginAttempt(): bool
+    public function createFailedLoginAttempt(): void
     {
         $ip = getRealIpAddr();
         $failedLoginAttemp = new FailedLoginAttemp($ip);
@@ -32,21 +34,16 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
     public function exceededThrottle(string $ip): bool
     {
         $minutes = intval(env('THROTTLE_MINUTES_CONFIG'));
-        $attemps = intval(env('THROTTLE_LOGIN_ATTEMPS'));
+        $attempts = intval(env('THROTTLE_LOGIN_ATTEMPS'));
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select("fla")
             ->from(FailedLoginAttemp::class, "fla")
-            ->where("ip_address = :ip")
-            ->andWhere("created_at >= DATE_SUB(now(), :minutes, 'minute')");
+            ->where("fla.ipAddress = :ip")
+            ->andWhere("fla.createdAt >= DATE_SUB(CURRENT_TIMESTAMP(), :minutes, 'minute')");
         $qb->setParameter("minutes", $minutes);
         $qb->setParameter("ip", $ip);
         $query = $qb->getQuery();
-        return count($query->getResult()) > $attemps;
-//        $sql = /** @lang SQL */"SELECT * FROM `failed_login_attemps` WHERE
-//                                         `created_at` >= DATE_SUB(now(),interval {$minutes} minute) AND
-//                                         `ip_address` = '{$ip}';";
-//        $stmt = $this->em->query($sql);
-//        return count($stmt->fetchAll()) > $attemps;
+        return count($query->getResult()) > $attempts;
     }
 }

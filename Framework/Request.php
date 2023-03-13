@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Framework;
+namespace MDP\Framework;
 
 class Request
 {

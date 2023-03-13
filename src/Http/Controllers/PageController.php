@@ -3,30 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Abstracts\Repositories\EmailAbstractRepository;
-use MDP\Container\Exceptions\NotFoundException;
-use Psr\Container\ContainerExceptionInterface;
-use ReflectionException;
 
 class PageController
 {
     public function __construct(private readonly EmailAbstractRepository $emailRepository) {}
 
-    /**
-     * @throws NotFoundException
-     * @throws ReflectionException
-     * @throws ContainerExceptionInterface
-     */
-    public function index()
+    public function index(): mixed
     {
         return render('index');
     }
 
-    /**
-     * @throws NotFoundException
-     * @throws ReflectionException
-     * @throws ContainerExceptionInterface
-     */
-    public function mail()
+    public function mail(): mixed
     {
         if (!auth()->user()) {
             redirect('/login');
@@ -35,23 +22,27 @@ class PageController
         return render('mail', compact('emails'));
     }
 
-    /**
-     * @throws NotFoundException
-     * @throws ReflectionException
-     * @throws ContainerExceptionInterface
-     */
-    public function about()
+    public function about(): mixed
     {
         return render('about');
     }
 
     /**
-     * @throws NotFoundException
-     * @throws ReflectionException
-     * @throws ContainerExceptionInterface
+     * @param int $code
+     * @param string $message
+     * @return mixed|void
      */
     public function error(int $code, string $message)
     {
-        return render('error.errors', compact('code', 'message'));
+        /**
+         * we don't use the render fn here, just
+         * in case the error is thrown within
+         */
+        try {
+            return require __DIR__ . "/../../Views/error/errors.view.php";
+        } catch (\Throwable $e) {
+            echo "<p>{$e->getMessage()}</p>";
+            echo "<p>{$e->getTraceAsString()}</p>";
+        }
     }
 }

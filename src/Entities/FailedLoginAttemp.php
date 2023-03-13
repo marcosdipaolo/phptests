@@ -16,7 +16,7 @@ class FailedLoginAttemp
 
     public function __construct(
         #[Column(name: "ip_address")]
-        private string $ipAddress
+        private readonly string $ipAddress
     ) {}
 
 }

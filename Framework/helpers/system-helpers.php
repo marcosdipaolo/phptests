@@ -1,6 +1,6 @@
 <?php
 
-use App\Framework\Providers\AppServiceProvider;
+use MDP\Framework\Providers\AppServiceProvider;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Level;
@@ -9,7 +9,7 @@ use MDP\Container\Container;
 if (!function_exists('env')) {
     function env(string $key): bool|array|string
     {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../../');
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
         return $_ENV[$key];
     }
