@@ -6,10 +6,11 @@ use App\Entities\Traits\HasTimestamps;
 use App\Entities\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
-#[Table]
+#[Entity, HasLifecycleCallbacks]
+#[Table("emails")]
 class Email
 {
     use Identifiable, HasTimestamps;

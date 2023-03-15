@@ -3,7 +3,7 @@
 namespace App\Repositories;
 use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
-use App\Entities\FailedLoginAttemp;
+use App\Entities\FailedLoginAttempt;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
 
@@ -11,7 +11,7 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
 {
     public function __construct()
     {
-        parent::__construct(FailedLoginAttemp::class);
+        parent::__construct(FailedLoginAttempt::class);
     }
 
     /**
@@ -22,8 +22,8 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
     public function createFailedLoginAttempt(): void
     {
         $ip = getRealIpAddr();
-        $failedLoginAttemp = new FailedLoginAttemp($ip);
-        $this->em->persist($failedLoginAttemp);
+        $failedLoginAttempt = new FailedLoginAttempt($ip);
+        $this->em->persist($failedLoginAttempt);
         $this->em->flush();
     }
 
@@ -38,7 +38,7 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select("fla")
-            ->from(FailedLoginAttemp::class, "fla")
+            ->from(FailedLoginAttempt::class, "fla")
             ->where("fla.ipAddress = :ip")
             ->andWhere("fla.createdAt >= DATE_SUB(CURRENT_TIMESTAMP(), :minutes, 'minute')");
         $qb->setParameter("minutes", $minutes);

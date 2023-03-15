@@ -16,9 +16,20 @@ if (!function_exists('env')) {
 }
 
 if (!function_exists('app')) {
-    function app(): Container
+    /**
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \MDP\Container\Exceptions\NotFoundException
+     * @throws ReflectionException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \MDP\Container\Exceptions\ContainerException
+     */
+    function app(string $identifier = null): mixed
     {
-        return AppServiceProvider::registerContainer();
+        $container = AppServiceProvider::registerContainer();
+        if($identifier) {
+            return $container->get($identifier);
+        }
+        return $container;
     }
 }
 

@@ -7,11 +7,12 @@ use App\Entities\Traits\Identifiable;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
 use MDP\Auth\Authenticatable;
 
-#[Entity]
+#[Entity, HasLifecycleCallbacks]
 #[Table("users")]
 class User implements Authenticatable
 {

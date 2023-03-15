@@ -4,8 +4,10 @@ namespace App\Repositories;
 
 use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Entities\User;
+use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\OptimisticLockException;
 
 class UserRepository extends BaseRepository implements UserAbstractRepository
 {
@@ -39,5 +41,18 @@ class UserRepository extends BaseRepository implements UserAbstractRepository
         $queryBuilder->setParameter("email", $email);
         $query = $queryBuilder->getQuery();
         return $query->getSingleResult();
+    }
+
+    /**
+     * @param User $user
+     * @return User
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(User $user): User
+    {
+        $this->em->persist($user);
+        $this->em->flush();
+        return $user;
     }
 }

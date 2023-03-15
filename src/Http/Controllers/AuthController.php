@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
+use App\Entities\User;
 use MDP\Auth\Auth;
 use MDP\Auth\Authenticatable;
 use MDP\Container\Exceptions\ContainerException;
@@ -31,11 +32,11 @@ class AuthController
     public function register()
     {
         try {
-            $this->auth->register(
-                request('username'), $email = request('email'), request('password')
-            );
-            /** @var Authenticatable $user */
-            $user = $this->userRepository->findByEmail($email);
+            $user = new User();
+            $user->setEmail(request('email'));
+            $user->setUsername(request('username'));
+            $user->setPassword(request('password'));
+            $user = $this->userRepository->save($user);
             auth()->login($user);
             return render('index', [
                 'success' => 'User registered'
