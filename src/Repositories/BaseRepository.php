@@ -9,6 +9,7 @@ use MDP\Container\Exceptions\ContainerException;
 use MDP\Container\Exceptions\NotFoundException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 
 abstract class BaseRepository extends EntityRepository
 {
@@ -18,7 +19,7 @@ abstract class BaseRepository extends EntityRepository
      * @throws NotFoundExceptionInterface
      * @throws NotFoundException
      * @throws ContainerExceptionInterface
-     * @throws \ReflectionException
+     * @throws ReflectionException
      * @throws ContainerException
      */
     public function __construct(string $class)

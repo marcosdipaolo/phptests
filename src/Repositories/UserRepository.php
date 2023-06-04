@@ -59,9 +59,11 @@ class UserRepository extends BaseRepository implements UserAbstractRepository
     /**
      * @throws ORMException
      */
-    public function getLoggedUser(): User | null
+    public function getLoggedUser(): User|null
     {
-        if(!auth()->isUserLoggedIn()) return null;
+        if (!auth()->isUserLoggedIn()) {
+            return null;
+        }
         /** @var User $user */
 //        $user = $this->em->merge(auth()->user());
         $user = $this->em->find(User::class, auth()->user()->getId());

@@ -6,13 +6,13 @@ use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Entities\User;
+use JetBrains\PhpStorm\NoReturn;
 use MDP\Auth\Auth;
 use MDP\Auth\Authenticatable;
-use MDP\Container\Exceptions\ContainerException;
-use MDP\Container\Exceptions\NotFoundException;
+use MDP\Router\Attributes\Get;
+use MDP\Router\Attributes\Post;
 use Monolog\Logger;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Throwable;
 
 class AuthController
 {
@@ -23,12 +23,12 @@ class AuthController
         private readonly UserAbstractRepository $userRepository,
         private readonly ConnectionInterface $conn,
         private readonly FailedLoginAttemptAbstractRepository $authenticationRepository
-    )
-    {
+    ) {
         $this->logger = setUpLogger('auth');
         $this->auth = auth($this->conn->getPDO());
     }
 
+    #[Post("/register")]
     public function register()
     {
         try {
@@ -39,13 +39,14 @@ class AuthController
             $user = $this->userRepository->save($user);
             auth()->login($user);
             return render('index', [
-                'success' => 'User registered'
+                'success' => 'User registered',
             ]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return render('auth.register', ['danger' => 'Snap!, ' . $e->getMessage()]);
         }
     }
 
+    #[Post("/login")]
     public function login(): bool
     {
         try {
@@ -53,9 +54,9 @@ class AuthController
                 redirect('/login', ['danger' => 'You\'ve been blocked. Please wait a minute.']);
             }
             if ($this->auth->check(
-                    $email = request('email'),
-                    request('password')
-                )
+                $email = request('email'),
+                request('password')
+            )
             ) {
 
                 /** @var Authenticatable $user */
@@ -65,13 +66,14 @@ class AuthController
             }
             $this->authenticationRepository->createFailedLoginAttempt();
             redirect('/login', ['danger' => 'There is no user with those credentials']);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error($e->getMessage());
             setFlashMessages(['danger' => $e->getMessage()]);
             return render('auth.login');
         }
     }
 
+    #[Get("/login")]
     public function loginForm()
     {
         if (auth()->user()) {
@@ -80,7 +82,9 @@ class AuthController
         return render('auth.login');
     }
 
-    public function logout()
+    #[NoReturn]
+    #[Get("/logout")]
+    public function logout(): void
     {
         auth()->logout();
         redirect('/', ['success' => 'You logged out successfuly']);

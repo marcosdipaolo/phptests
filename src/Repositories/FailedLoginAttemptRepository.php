@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repositories;
-use App\Abstracts\ConnectionInterface;
+
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Entities\FailedLoginAttempt;
 use Doctrine\ORM\Exception\ORMException;

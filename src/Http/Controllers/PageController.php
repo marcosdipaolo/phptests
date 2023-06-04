@@ -6,8 +6,9 @@ use App\Abstracts\Repositories\EmailAbstractRepository;
 use App\Abstracts\Repositories\ProfileAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Entities\Profile;
-
-#[\Attribute]
+use MDP\Router\Attributes\Get;
+use MDP\Router\Attributes\Post;
+use Throwable;
 
 class PageController
 {
@@ -15,13 +16,16 @@ class PageController
         private readonly EmailAbstractRepository $emailRepository,
         private readonly ProfileAbstractRepository $profileRepository,
         private readonly UserAbstractRepository $userRepository,
-    ) {}
+    ) {
+    }
 
+    #[Get("/")]
     public function index(): mixed
     {
         return render('index');
     }
 
+    #[Get("/mail")]
     public function mail(): mixed
     {
         if (!auth()->user()) {
@@ -31,6 +35,7 @@ class PageController
         return render('mail', compact('emails'));
     }
 
+    #[Get("/about")]
     public function about(): mixed
     {
         return render('about');
@@ -49,15 +54,16 @@ class PageController
          */
         try {
             return require __DIR__ . "/../../Views/error/errors.view.php";
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             echo "<p>{$e->getMessage()}</p>";
             echo "<p>{$e->getTraceAsString()}</p>";
         }
     }
 
+    #[Get("/profile")]
     public function profile()
     {
-        if(!auth()->isUserLoggedIn()) {
+        if (!auth()->isUserLoggedIn()) {
             setFlashMessages(["danger" => "No user logged in"]);
             redirect("/login");
         }
@@ -72,9 +78,10 @@ class PageController
     /**
      * @return mixed|void
      */
+    #[Post("/storeProfile")]
     public function storeProfile()
     {
-        if(!auth()->isUserLoggedIn()) {
+        if (!auth()->isUserLoggedIn()) {
             setFlashMessages(["danger" => "No user logged in"]);
             redirect("/login");
         }
@@ -87,24 +94,27 @@ class PageController
 
                 setFlashMessages(["success" => "Your profile has been updated"]);
                 return render("profile", compact("profile"));
-            } catch(\Throwable $e) {
+            } catch (Throwable $e) {
                 setFlashMessages(["danger" => $e->getMessage()]);
                 redirect("/profile");
             }
         } else {
-            if(
+            if (
                 !files("image") ||
                 files("image")["error"] == UPLOAD_ERR_NO_FILE
             ) {
                 setFlashMessages(["danger" => "Are you sure you uploaded a file?"]);
-            } else if (files("image")["error"] == UPLOAD_ERR_OK) {
-                setFlashMessages(["danger" => "There was a problem uploading the file"]);
+            } else {
+                if (files("image")["error"] == UPLOAD_ERR_OK) {
+                    setFlashMessages(["danger" => "There was a problem uploading the file"]);
+                }
             }
             redirect("/profile");
         }
     }
 
-    private function createProfile(string $fullPath): Profile {
+    private function createProfile(string $fullPath): Profile
+    {
         $profile = new Profile();
         $profile->setImagePath($fullPath);
         $profile->setAddress(post('address'));

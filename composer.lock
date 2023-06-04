@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1279ba604d5b9c1ec976ea3b9e6b5723",
+    "content-hash": "73bbb45c6d1b16c2b2a92b3d1a833691",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1395,21 +1395,21 @@
         },
         {
             "name": "marcosdipaolo/router",
-            "version": "1.0.7",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marcosdipaolo/router.git",
-                "reference": "9af37cabd320b8eb127db0259b0b1bdc70cab2c2"
+                "reference": "18162240fc71a38832a4522df7e19b77b222d55b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marcosdipaolo/router/zipball/9af37cabd320b8eb127db0259b0b1bdc70cab2c2",
-                "reference": "9af37cabd320b8eb127db0259b0b1bdc70cab2c2",
+                "url": "https://api.github.com/repos/marcosdipaolo/router/zipball/18162240fc71a38832a4522df7e19b77b222d55b",
+                "reference": "18162240fc71a38832a4522df7e19b77b222d55b",
                 "shasum": ""
             },
             "require": {
                 "marcosdipaolo/container": "dev-master",
-                "php": ">=8.0",
+                "php": ">=8.2",
                 "phpunit/phpunit": "^9.5"
             },
             "type": "library",
@@ -1436,9 +1436,9 @@
             ],
             "support": {
                 "issues": "https://github.com/marcosdipaolo/router/issues",
-                "source": "https://github.com/marcosdipaolo/router/tree/1.0.7"
+                "source": "https://github.com/marcosdipaolo/router/tree/1.1.1"
             },
-            "time": "2022-08-26T03:24:41+00:00"
+            "time": "2023-06-04T19:54:39+00:00"
         },
         {
             "name": "marcosdipaolo/session",

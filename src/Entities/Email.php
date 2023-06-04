@@ -22,9 +22,11 @@ class Email
         private string $subject,
         #[Column(name: "`body`", type: "string", columnDefinition: "VARCHAR(255) NOT NULL")]
         private string $body,
-    ) {}
+    ) {
+    }
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 

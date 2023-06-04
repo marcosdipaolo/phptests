@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers;
 use MDP\Framework\Providers\AppServiceProvider;
 use Dotenv\Dotenv;
 use MDP\Router\Router;
-use MDP\Router\RouterConfiguration;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -13,13 +13,14 @@ try {
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();
 
-    $config = new RouterConfiguration();
-    $config->setControllersNamespace('App\Http\Controllers');
-    $config->setRoutesFilePath(__DIR__ . '/src/Http/router.php');
-
     $container = AppServiceProvider::registerContainer();
 
-    $router = Router::create($config, $container);
+    $router = Router::create([
+        Controllers\PageController::class,
+        Controllers\AuthController::class,
+        Controllers\UserController::class,
+        Controllers\MailController::class,
+    ], $container);
     $router->direct();
 } catch (\Throwable $e) {
     $code = $e->getCode();

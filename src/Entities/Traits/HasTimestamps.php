@@ -25,9 +25,12 @@ trait HasTimestamps
         $this->createdAt = $createdAt;
     }
 
-    public function setUpdatedAt(DateTime $updatedAt): void
+    #[PrePersist]
+    #[PreUpdate]
+    public function updatedTimestamps(): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->initializeTimestamps();
+        $this->setUpdatedAt(new DateTime());
     }
 
     public function initializeTimestamps(): void
@@ -36,11 +39,8 @@ trait HasTimestamps
         $this->updatedAt = $this->updatedAt ?? new Datetime();
     }
 
-    #[PrePersist]
-    #[PreUpdate]
-    public function updatedTimestamps(): void
+    public function setUpdatedAt(DateTime $updatedAt): void
     {
-        $this->initializeTimestamps();
-        $this->setUpdatedAt(new \DateTime());
+        $this->updatedAt = $updatedAt;
     }
 }
