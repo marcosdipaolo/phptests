@@ -116,4 +116,20 @@ class User implements Authenticatable
         $this->id = $id;
         return $this;
     }
+
+    /**
+     * @return Profile
+     */
+    public function getProfile(): Profile
+    {
+        return $this->profile;
+    }
+
+    /**
+     * @param Profile $profile
+     */
+    public function setProfile(Profile $profile): void
+    {
+        $this->profile = $profile;
+    }
 }

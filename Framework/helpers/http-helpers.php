@@ -35,6 +35,16 @@ if (!function_exists('post')) {
     }
 }
 
+if (!function_exists('files')) {
+    function files(string $key = null): mixed
+    {
+        if ($key) {
+            return $_FILES[$key] ?? null;
+        }
+        return $_FILES;
+    }
+}
+
 if (!function_exists('get')) {
     function get(string $key = null): mixed
     {

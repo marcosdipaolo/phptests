@@ -5,9 +5,11 @@ namespace MDP\Framework\Providers;
 use App\Abstracts\ConnectionInterface;
 use App\Abstracts\Repositories\FailedLoginAttemptAbstractRepository;
 use App\Abstracts\Repositories\EmailAbstractRepository;
+use App\Abstracts\Repositories\ProfileAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Repositories\FailedLoginAttemptRepository;
 use App\Repositories\EmailRepository;
+use App\Repositories\ProfileRepository;
 use App\Repositories\UserRepository;
 use MDP\DB\Connection;
 use MDP\Container\Container;
@@ -19,7 +21,8 @@ class AppServiceProvider
         EmailAbstractRepository::class => EmailRepository::class,
         UserAbstractRepository::class => UserRepository::class,
         FailedLoginAttemptAbstractRepository::class => FailedLoginAttemptRepository::class,
-        ConnectionInterface::class => Connection::class
+        ConnectionInterface::class => Connection::class,
+        ProfileAbstractRepository::class => ProfileRepository::class
     ];
 
     public static function registerContainer(): Container

@@ -17,9 +17,9 @@ clearFlashMessages();
     if (alert) {
         setTimeout(function(){
             alert.style.opacity = "0";
-        }, 2000);
+        }, 20000);
         setTimeout(function(){
             alert.parentNode.removeChild(alert);
-        }, 3000);
+        }, 22000);
     }
 </script>

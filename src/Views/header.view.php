@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="<?php echo asset('css/vendor/bootstrap.min.css') ?>">
-    <link rel="stylesheet" href="<?php echo asset('css/style.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/vendor/bootstrap.min.css') ?>">
+    <link rel="stylesheet" href="<?= asset('css/style.css') ?>">
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
@@ -42,7 +42,7 @@
                                aria-haspopup="true" aria-expanded="false" href="#"><?=
                                 ucfirst(auth()->user()->getUsername()) ?></a>
                             <div class="dropdown-menu" aria-labelledby="logged">
-                                <a href="#" class="dropdown-item">Account</a>
+                                <a href="/profile" class="dropdown-item">Account</a>
                                 <a class="dropdown-item" href="/logout">Logout</a>
                             </div>
                         </li>

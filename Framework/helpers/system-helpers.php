@@ -1,13 +1,17 @@
 <?php
 
+use MDP\Container\Exceptions\ContainerException;
+use MDP\Container\Exceptions\NotFoundException;
 use MDP\Framework\Providers\AppServiceProvider;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Level;
 use MDP\Container\Container;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 if (!function_exists('env')) {
-    function env(string $key): bool|array|string
+    function env(string $key): bool|array|string|null
     {
         $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
@@ -17,11 +21,11 @@ if (!function_exists('env')) {
 
 if (!function_exists('app')) {
     /**
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \MDP\Container\Exceptions\NotFoundException
+     * @throws NotFoundExceptionInterface
+     * @throws NotFoundException
      * @throws ReflectionException
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \MDP\Container\Exceptions\ContainerException
+     * @throws ContainerExceptionInterface
+     * @throws ContainerException
      */
     function app(string $identifier = null): mixed
     {

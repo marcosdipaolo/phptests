@@ -35,7 +35,7 @@ class AuthController
             $user = new User();
             $user->setEmail(request('email'));
             $user->setUsername(request('username'));
-            $user->setPassword(request('password'));
+            $user->setPassword(password_hash(request('password'), PASSWORD_BCRYPT));
             $user = $this->userRepository->save($user);
             auth()->login($user);
             return render('index', [
@@ -83,6 +83,6 @@ class AuthController
     public function logout()
     {
         auth()->logout();
-        return redirect('/', ['success' => 'You logged out successfuly']);
+        redirect('/', ['success' => 'You logged out successfuly']);
     }
 }

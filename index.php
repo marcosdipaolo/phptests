@@ -7,6 +7,8 @@ use MDP\Router\RouterConfiguration;
 
 require __DIR__ . '/vendor/autoload.php';
 
+define("STORAGE_PATH", env("STORAGE_PATH") ?? __DIR__ . "/storage");
+
 try {
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();

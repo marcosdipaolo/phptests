@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping\Id;
 
 trait Identifiable
 {
-    #[Id]
-    #[Column, GeneratedValue]
+    #[Id, Column, GeneratedValue]
     private int $id;
 }

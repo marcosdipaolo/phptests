@@ -21,8 +21,54 @@ class Profile
     private string $address;
     #[Column]
     private string $imagePath;
-
     #[OneToOne(inversedBy: 'profile', targetEntity: User::class)]
-    #[JoinColumn(name: 'customer_id', referencedColumnName: 'id')]
     private User $user;
+
+    /**
+     * @return string
+     */
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagePath(): string
+    {
+        return $this->imagePath;
+    }
+
+    /**
+     * @param string $imagePath
+     */
+    public function setImagePath(string $imagePath): void
+    {
+        $this->imagePath = $imagePath;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
 }
