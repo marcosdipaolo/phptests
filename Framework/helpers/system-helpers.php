@@ -63,24 +63,24 @@ if (!function_exists('setUpLogger')) {
     }
 }
 
-function on_shut_down()
-{
-    if (
-        isset(error_get_last()['type']) &&
-        isset(error_get_last()['message']) &&
-        (error_get_last()['type'] == E_ERROR)
-    ) {
-        try {
-            return render('error.errors', [
-                'code' => 500,
-                'message' => error_get_last()['message']
-            ]);
-        } catch(\Throwable $e) {
-            //
+if (!function_exists('onShutDown')) {
+    function onShutDown()
+    {
+        if (
+            isset(error_get_last()['type']) &&
+            isset(error_get_last()['message']) &&
+            (error_get_last()['type'] == E_ERROR)
+        ) {
+            try {
+                return render('error.errors', [
+                    'code' => 500,
+                    'message' => error_get_last()['message']
+                ]);
+            } catch(\Throwable $e) {
+                //
+            }
         }
+        return null;
     }
-    return null;
+    register_shutdown_function('onShutDown');
 }
-
-
-register_shutdown_function('on_shut_down');

@@ -84,3 +84,14 @@ if (!function_exists('getRealIpAddr')) {
         return $ip;
     }
 }
+
+if (!function_exists('getControllers')) {
+    function getControllers(string $namespace = "App\\Http\\Controllers\\"): array {
+        $scan = scandir(ROOT_DIR . "/src/Http/Controllers");
+        array_splice($scan, 0, 2);
+        return array_map(function($class) use ($namespace) {
+            $classNoExt = str_replace(".php", "", $class);
+            return $namespace . $classNoExt;
+        }, $scan);
+    }
+}

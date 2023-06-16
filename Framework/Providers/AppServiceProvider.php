@@ -18,6 +18,7 @@ class AppServiceProvider
 {
     private static Container | NULL $container = NULL;
     private static array $bindings = [
+        // Abstract => Concrete
         EmailAbstractRepository::class => EmailRepository::class,
         UserAbstractRepository::class => UserRepository::class,
         FailedLoginAttemptAbstractRepository::class => FailedLoginAttemptRepository::class,
@@ -25,6 +26,9 @@ class AppServiceProvider
         ProfileAbstractRepository::class => ProfileRepository::class
     ];
 
+    /**
+     * We create a container, load all bindings into it and return it
+     */
     public static function registerContainer(): Container
     {
         if (self::$container instanceof Container) return self::$container;

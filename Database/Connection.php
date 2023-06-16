@@ -3,6 +3,8 @@
 namespace MDP\DB;
 
 use App\Abstracts\ConnectionInterface;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
@@ -12,6 +14,8 @@ class Connection implements ConnectionInterface
 {
     private EntityManager $entityManager;
     private array $connectionData;
+
+    private \Doctrine\DBAL\Connection $connection;
 
     /**
      * @throws ORMException
@@ -25,12 +29,16 @@ class Connection implements ConnectionInterface
             "host" => $_ENV['DB_HOST'],
             "port" => $_ENV['DB_PORT'] ?? 3306,
             "driver" => $_ENV["DB_DRIVER"],
-            "pdo_driver" => $_ENV["PDO_DRIVER"]
+            "pdo_driver" => $_ENV["PDO_DRIVER"],
         ];
-    $this->entityManager = EntityManager::create(
-            $this->connectionData,
-            ORMSetup::createAttributeMetadataConfiguration([__DIR__ . "/../src/Entities"])
-        );
+        try {
+            $this->connection = DriverManager::getConnection($this->connectionData);
+            $this->entityManager = new EntityManager(
+                $this->connection,
+                ORMSetup::createAttributeMetadataConfiguration([__DIR__ . "/../src/Entities"])
+            );
+        } catch (Exception $e) {
+        }
     }
 
     /**
@@ -41,7 +49,8 @@ class Connection implements ConnectionInterface
         return $this->entityManager;
     }
 
-    public function getPDO(): \PDO {
+    public function getPDO(): \PDO
+    {
         return new \PDO(
             "{$this->connectionData["pdo_driver"]}:host={$this->connectionData["host"]};" .
             "port={$this->connectionData["port"]};dbname={$this->connectionData["dbname"]}",
@@ -55,6 +64,6 @@ class Connection implements ConnectionInterface
      */
     public function getDoctrineConnection(): \Doctrine\DBAL\Connection
     {
-        return $this->entityManager->getConnection();
+        return $this->connection;
     }
 }

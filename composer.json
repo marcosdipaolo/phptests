@@ -19,17 +19,16 @@
         "nesbot/carbon": "^2.61",
         "monolog/monolog": "^3.2",
         "marcosdipaolo/session": "^1.0",
-        "marcosdipaolo/router": "1.1.1",
         "marcosdipaolo/auth": "^1.0",
         "marcosdipaolo/mailer": "^1.0",
         "nette/php-generator": "^4.0",
-        "marcosdipaolo/container": "dev-master",
         "ext-pdo": "*",
         "doctrine/orm": "^2.13",
         "doctrine/dbal": "^3.4",
         "doctrine/migrations": "^3.5",
         "symfony/cache": "^6.1",
-        "doctrine/annotations": "^1.13"
+        "doctrine/annotations": "^1.13",
+        "marcosdipaolo/router": "^1.1"
     },
     "autoload": {
         "psr-4": {
