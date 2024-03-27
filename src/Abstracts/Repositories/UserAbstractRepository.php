@@ -9,5 +9,4 @@ interface UserAbstractRepository
     public function get(int $id): User;
     public function save(User $user): User;
     public function findByEmail(string $email): ?User;
-    public function getLoggedUser(): User | null;
 }

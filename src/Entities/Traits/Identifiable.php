@@ -9,5 +9,5 @@ use Doctrine\ORM\Mapping\Id;
 trait Identifiable
 {
     #[Id, Column, GeneratedValue]
-    private int $id;
+    protected int | string $id;
 }

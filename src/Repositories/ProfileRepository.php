@@ -4,9 +4,13 @@ namespace App\Repositories;
 
 use App\Abstracts\Repositories\ProfileAbstractRepository;
 use App\Entities\Profile;
-use App\Entities\User;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use MDP\Container\Exceptions\ContainerException;
+use MDP\Container\Exceptions\NotFoundException;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 
 class ProfileRepository extends BaseRepository implements ProfileAbstractRepository
 {
@@ -18,15 +22,20 @@ class ProfileRepository extends BaseRepository implements ProfileAbstractReposit
     /**
      * @param Profile $profile
      * @return void
+     * @throws ContainerException
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundException
+     * @throws NotFoundExceptionInterface
      * @throws ORMException
      * @throws OptimisticLockException
+     * @throws ReflectionException
      */
     public function save(Profile $profile): void
     {
-        /** @var User $user */
-        $user = $this->em->merge(auth()->user());
+        $user = getLoggedUser();
         $profile->setUser($user);
-        $this->em->persist($profile);
+        $user->setProfile($profile);
+        $this->em->merge($user);
         $this->em->flush();
     }
 }

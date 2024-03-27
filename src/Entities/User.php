@@ -3,35 +3,41 @@
 namespace App\Entities;
 
 use App\Entities\Traits\HasTimestamps;
-use App\Entities\Traits\Identifiable;
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
 use MDP\Auth\Authenticatable;
 
 #[Entity, HasLifecycleCallbacks]
 #[Table("users")]
-class User implements Authenticatable
+class User extends Authenticatable
 {
-    use Identifiable, HasTimestamps;
+    use HasTimestamps;
 
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: "AUTO")]
+    protected int | string $id;
     #[Column]
-    private string $username;
+    protected string $username;
     #[Column]
-    private string $email;
+    protected string $email;
     #[Column]
-    private string $password;
-    #[OneToOne(mappedBy: 'user', targetEntity: Profile::class)]
+    protected string $password;
+    #[OneToOne(mappedBy: 'user', targetEntity: Profile::class, cascade: ['all'])]
     private Profile $profile;
     #[Column(name: "verified_at", nullable: true)]
     private DateTime $verifiedAt;
 
-    /**
-     * @return string
-     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     public function getUsername(): string
     {
         return $this->username;
@@ -47,9 +53,6 @@ class User implements Authenticatable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
@@ -65,9 +68,6 @@ class User implements Authenticatable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -84,14 +84,6 @@ class User implements Authenticatable
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return DateTime
      */
     public function getVerifiedAt(): DateTime
@@ -101,19 +93,11 @@ class User implements Authenticatable
 
     /**
      * @param DateTime $verifiedAt
-     */
-    public function setVerifiedAt(DateTime $verifiedAt): void
-    {
-        $this->verifiedAt = $verifiedAt;
-    }
-
-    /**
-     * @param int $id
      * @return $this
      */
-    public function setId(int $id): self
+    public function setVerifiedAt(DateTime $verifiedAt): self
     {
-        $this->id = $id;
+        $this->verifiedAt = $verifiedAt;
         return $this;
     }
 
@@ -127,9 +111,11 @@ class User implements Authenticatable
 
     /**
      * @param Profile $profile
+     * @return $this
      */
-    public function setProfile(Profile $profile): void
+    public function setProfile(Profile $profile): self
     {
         $this->profile = $profile;
+        return $this;
     }
 }

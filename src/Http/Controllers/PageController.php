@@ -6,8 +6,13 @@ use App\Abstracts\Repositories\EmailAbstractRepository;
 use App\Abstracts\Repositories\ProfileAbstractRepository;
 use App\Abstracts\Repositories\UserAbstractRepository;
 use App\Entities\Profile;
+use MDP\Container\Exceptions\ContainerException;
+use MDP\Container\Exceptions\NotFoundException;
 use MDP\Router\Attributes\Get;
 use MDP\Router\Attributes\Post;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 use Throwable;
 
 class PageController
@@ -15,7 +20,6 @@ class PageController
     public function __construct(
         private readonly EmailAbstractRepository $emailRepository,
         private readonly ProfileAbstractRepository $profileRepository,
-        private readonly UserAbstractRepository $userRepository,
     ) {
     }
 
@@ -60,6 +64,13 @@ class PageController
         }
     }
 
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws NotFoundException
+     * @throws ReflectionException
+     * @throws ContainerExceptionInterface
+     * @throws ContainerException
+     */
     #[Get("/profile")]
     public function profile()
     {
@@ -68,9 +79,7 @@ class PageController
             redirect("/login");
         }
         return render('profile', [
-            'profile' => $this
-                ->userRepository
-                ->getLoggedUser()
+            'profile' => getLoggedUser()
                 ->getProfile(),
         ]);
     }
@@ -78,19 +87,19 @@ class PageController
     /**
      * @return mixed|void
      */
-    #[Post("/storeProfile")]
+    #[Post("/profile")]
     public function storeProfile()
     {
         if (!auth()->isUserLoggedIn()) {
             setFlashMessages(["danger" => "No user logged in"]);
             redirect("/login");
         }
-        if (post("address") && files("image")["error"] == UPLOAD_ERR_OK) {
+        if (post("address") && files("image")["error"] === UPLOAD_ERR_OK) {
             try {
-                $fullPath = STORAGE_PATH . "/" . files("image")["full_path"];
-                $profile = $this->createProfile($fullPath);
+                $fullImagePath = STORAGE_PATH . "/" . files("image")["full_path"];
+                $profile = $this->updateProfile($fullImagePath);
 
-                move_uploaded_file(files("image")["tmp_name"], $fullPath);
+                move_uploaded_file(files("image")["tmp_name"], $fullImagePath);
 
                 setFlashMessages(["success" => "Your profile has been updated"]);
                 return render("profile", compact("profile"));
@@ -103,7 +112,7 @@ class PageController
                 !files("image") ||
                 files("image")["error"] == UPLOAD_ERR_NO_FILE
             ) {
-                setFlashMessages(["danger" => "Are you sure you uploaded a file?"]);
+                setFlashMessages(["danger" => "Are you sure you selected a file?"]);
             } else {
                 if (files("image")["error"] == UPLOAD_ERR_OK) {
                     setFlashMessages(["danger" => "There was a problem uploading the file"]);
@@ -113,10 +122,17 @@ class PageController
         }
     }
 
-    private function createProfile(string $fullPath): Profile
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws NotFoundException
+     * @throws ContainerExceptionInterface
+     * @throws ReflectionException
+     * @throws ContainerException
+     */
+    private function updateProfile(string $fullImagePath): Profile
     {
-        $profile = new Profile();
-        $profile->setImagePath($fullPath);
+        $profile = $this->profileRepository->find(getLoggedUser()->getProfile()->getId());
+        $profile->setImagePath($fullImagePath);
         $profile->setAddress(post('address'));
         $this->profileRepository->save($profile);
         return $profile;

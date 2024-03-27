@@ -15,9 +15,8 @@ $dotenv->load();
 $config = new PhpFile('migrations.php'); // Or use one of    the Doctrine\Migrations\Configuration\Configuration\* loaders
 
 $paths = [__DIR__ . '/src/Entities'];
-$isDevMode = true;
 
-$ORMconfig = Setup::createAttributeMetadataConfiguration($paths, $isDevMode);
+$ORMconfig = Setup::createAttributeMetadataConfiguration($paths, true);
 $entityManager = (new Connection)->getEntityManager();
 
 return DependencyFactory::fromEntityManager($config, new ExistingEntityManager($entityManager));

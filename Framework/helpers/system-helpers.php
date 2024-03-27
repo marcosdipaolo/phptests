@@ -1,5 +1,6 @@
 <?php
 
+use Dotenv\Dotenv;
 use MDP\Container\Exceptions\ContainerException;
 use MDP\Container\Exceptions\NotFoundException;
 use MDP\Framework\Providers\AppServiceProvider;
@@ -11,11 +12,14 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 if (!function_exists('env')) {
-    function env(string $key): bool|array|string|null
+    function env(string $key, string $default = NULL): bool|array|string|null
     {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
-        return $_ENV[$key];
+        return match ($_ENV[$key]) {
+            "", null => $default,
+            default => $_ENV[$key],
+        };
     }
 }
 

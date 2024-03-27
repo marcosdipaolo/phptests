@@ -3,19 +3,24 @@
 namespace App\Entities;
 
 use App\Entities\Traits\HasTimestamps;
-use App\Entities\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity, HasLifecycleCallbacks]
 #[Table("emails")]
 class Email
 {
-    use Identifiable, HasTimestamps;
+  use HasTimestamps;
+
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: "AUTO")]
+    protected int | string $id;
 
     public function __construct(
+
         #[Column(name: "`to`", type: "string", columnDefinition: "VARCHAR(255) NOT NULL")]
         private string $to,
         #[Column(name: "`subject`", type: "string", columnDefinition: "VARCHAR(255) NOT NULL")]

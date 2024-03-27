@@ -19,11 +19,11 @@
         "nesbot/carbon": "^2.61",
         "monolog/monolog": "^3.2",
         "marcosdipaolo/session": "^1.0",
-        "marcosdipaolo/auth": "^1.0",
+        "marcosdipaolo/auth": "dev-master",
         "marcosdipaolo/mailer": "^1.0",
         "nette/php-generator": "^4.0",
         "ext-pdo": "*",
-        "doctrine/orm": "^2.13",
+        "doctrine/orm": "^2.19",
         "doctrine/dbal": "^3.4",
         "doctrine/migrations": "^3.5",
         "symfony/cache": "^6.1",
@@ -40,7 +40,8 @@
             "Framework/helpers/dev-helpers.php",
             "Framework/helpers/http-helpers.php",
             "Framework/helpers/system-helpers.php",
-            "Framework/helpers/view-helpers.php"
+            "Framework/helpers/view-helpers.php",
+            "Framework/helpers/auth-helpers.php"
         ]
     },
     "require-dev": {

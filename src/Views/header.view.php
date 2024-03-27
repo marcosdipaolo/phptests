@@ -41,7 +41,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="logged" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false" href="#"><?=
-                                ucfirst(auth()->user()->getUsername()) ?></a>
+                                ucfirst(auth()->user()->getAuthenticatedUsername()) ?></a>
                             <div class="dropdown-menu" aria-labelledby="logged">
                                 <a href="/profile" class="dropdown-item">Account</a>
                                 <a class="dropdown-item" href="/logout">Logout</a>

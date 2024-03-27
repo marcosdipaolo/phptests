@@ -33,9 +33,11 @@ class Connection implements ConnectionInterface
         ];
         try {
             $this->connection = DriverManager::getConnection($this->connectionData);
+            $config = ORMSetup::createAttributeMetadataConfiguration([__DIR__ . "/../src/Entities"]);
+            $config->setAutoGenerateProxyClasses(true);
             $this->entityManager = new EntityManager(
                 $this->connection,
-                ORMSetup::createAttributeMetadataConfiguration([__DIR__ . "/../src/Entities"])
+                $config
             );
         } catch (Exception $e) {
         }

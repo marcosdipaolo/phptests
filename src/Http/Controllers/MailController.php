@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Abstracts\Repositories\EmailAbstractRepository;
 use App\Entities\User;
 use Exception;
+use MDP\Container\Exceptions\ContainerException;
+use MDP\Container\Exceptions\NotFoundException;
 use MDP\Router\Attributes\Post;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use ReflectionException;
 use Throwable;
 
 class MailController
@@ -15,11 +20,18 @@ class MailController
     {
     }
 
+    /**
+     * @throws NotFoundExceptionInterface
+     * @throws NotFoundException
+     * @throws ReflectionException
+     * @throws ContainerExceptionInterface
+     * @throws ContainerException
+     */
     #[Post("/mail")]
     public function mail()
     {
         /** @var User | null $user */
-        if (!$loggedUser = auth()->user()) {
+        if (!$loggedUser = getLoggedUser()) {
             redirect('/login');
         }
         try {

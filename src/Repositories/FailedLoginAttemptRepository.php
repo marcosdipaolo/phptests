@@ -33,8 +33,9 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
      */
     public function exceededThrottle(string $ip): bool
     {
-        $minutes = intval(env('THROTTLE_MINUTES_CONFIG'));
-        $attempts = intval(env('THROTTLE_LOGIN_ATTEMPS'));
+        $logger = setUpLogger('failedLoginAttempts');
+        $minutes = intval(env('THROTTLE_MINUTES_CONFIG', 1));
+        $attempts = intval(env('THROTTLE_LOGIN_ATTEMPS', 3));
         $qb = $this->em->createQueryBuilder();
         $qb
             ->select("fla")
@@ -44,6 +45,6 @@ class FailedLoginAttemptRepository extends BaseRepository implements FailedLogin
         $qb->setParameter("minutes", $minutes);
         $qb->setParameter("ip", $ip);
         $query = $qb->getQuery();
-        return count($query->getResult()) > $attempts;
+        return count($query->getResult()) >= ($attempts - 1);
     }
 }

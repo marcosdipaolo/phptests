@@ -26,6 +26,12 @@ abstract class BaseRepository extends EntityRepository
     {
         $conn = app()->get(ConnectionInterface::class);
         $this->em = $conn->getEntityManager();
+        setUpLogger("base-repository")->info($this->em->getClassMetadata($class));
         parent::__construct($this->em, $this->em->getClassMetadata($class));
+    }
+
+    public function getEntityManager(): EntityManager
+    {
+        return $this->em;
     }
 }

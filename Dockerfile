@@ -23,3 +23,5 @@ RUN apt-get update && \
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN a2enmod rewrite
 RUN service apache2 restart
+COPY composer.json composer.lock
+RUN composer install

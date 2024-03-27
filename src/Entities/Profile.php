@@ -3,10 +3,12 @@
 namespace App\Entities;
 
 use App\Entities\Traits\HasTimestamps;
-use App\Entities\Traits\Identifiable;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
 
@@ -14,21 +16,30 @@ use Doctrine\ORM\Mapping\Table;
 #[Table("profiles")]
 class Profile
 {
-    use Identifiable, HasTimestamps;
+    use HasTimestamps;
 
-    #[Column]
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: "AUTO")]
+    protected int | string $id;
+
+    #[Column(nullable: true)]
     private string $address;
-    #[Column]
+    #[Column(nullable: true)]
     private string $imagePath;
     #[OneToOne(inversedBy: 'profile', targetEntity: User::class)]
+    #[JoinColumn(name: "user_id", referencedColumnName: "id")]
     private User $user;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddress(): string
+    public function getAddress(): string | null
     {
-        return $this->address;
+        return $this->address ?? NULL;
+    }
+
+    public function getId(): int|string
+    {
+        return $this->id;
     }
 
     /**
@@ -40,11 +51,11 @@ class Profile
     }
 
     /**
-     * @return string
+     * @return string|NULL
      */
-    public function getImagePath(): string
+    public function getImagePath(): string | NULL
     {
-        return $this->imagePath;
+        return $this->imagePath ?? NULL;
     }
 
     /**
