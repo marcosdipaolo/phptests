@@ -20,9 +20,7 @@ if (!function_exists("asset")) {
 if (!function_exists("storage")) {
     function storage(string $path, string $storagePath = "/storage"): string
     {
-        $imagePathArr = explode($storagePath, $path);
-//        if(count($imagePathArr) < 2) throw new Exception("Not a valid storage path");
-        return 'http://' . $_SERVER['HTTP_HOST'] . '/storage' . $imagePathArr[1];
+        return 'http://' . $_SERVER['HTTP_HOST'] . $storagePath . $path;
     }
 }
 

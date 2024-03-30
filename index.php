@@ -8,7 +8,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 const ROOT_DIR = __DIR__;
 
-define("STORAGE_PATH", __DIR__ . env("STORAGE_PATH", "/storage"));
+define("STORAGE_PATH", env("STORAGE_PATH", "/storage"));
 
 try {
     $dotenv = Dotenv::createImmutable(__DIR__);
