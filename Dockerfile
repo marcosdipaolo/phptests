@@ -1,6 +1,7 @@
 FROM php:8.2-apache
 
 WORKDIR /var/www/html
+COPY . .
 
 RUN apt-get update && \
     apt-get install -y \
@@ -27,6 +28,4 @@ RUN a2enmod rewrite
 RUN service apache2 restart
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-COPY composer.json .
-COPY composer.lock .
 RUN composer install

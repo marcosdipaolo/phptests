@@ -46,10 +46,5 @@
     },
     "require-dev": {
         "psy/psysh": "^0.10.3"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "vendor/bin/doctrine-migrations migrations:migrate"
-        ]
     }
 }
