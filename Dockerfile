@@ -27,5 +27,5 @@ RUN service apache2 restart
 ENV COMPOSER_ALLOW_SUPERUSER=1
 WORKDIR /var/www/html
 COPY composer.json /var/www/html
-COPY composer.lock /var/ww/html
+COPY composer.lock /var/www/html
 RUN composer install
