@@ -1,5 +1,7 @@
 FROM php:8.2-apache
 
+WORKDIR /var/www/html
+
 RUN apt-get update && \
     apt-get install -y \
     zlib1g-dev \
@@ -25,7 +27,6 @@ RUN a2enmod rewrite
 RUN service apache2 restart
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
-WORKDIR /var/www/html
-COPY composer.json /var/www/html
-COPY composer.lock /var/www/html
+COPY composer.json .
+COPY composer.lock .
 RUN composer install
