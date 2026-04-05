@@ -14,7 +14,10 @@ try {
     $dotenv = Dotenv::createImmutable(__DIR__);
     $dotenv->load();
     $container = AppServiceProvider::registerContainer();
-    $router = Router::create(getControllers(), $container);
+    $router = Router::create(
+      getControllers(controllersDirectory: "./src/Http/Controllers"), 
+      $container
+    );
     $router->direct();
 } catch (\Throwable $e) {
     $code = $e->getCode();

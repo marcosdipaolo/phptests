@@ -27,8 +27,8 @@
         "doctrine/dbal": "^3.4",
         "doctrine/migrations": "^3.5",
         "symfony/cache": "^6.1",
-        "doctrine/annotations": "^1.13",
-        "marcosdipaolo/router": "^1.1"
+        "marcosdipaolo/router": "^1.1",
+        "marcosdipaolo/container": "^1"
     },
     "autoload": {
         "psr-4": {
@@ -45,6 +45,6 @@
         ]
     },
     "require-dev": {
-        "psy/psysh": "^0.10.3"
+        "psy/psysh": "^0.12"
     }
 }

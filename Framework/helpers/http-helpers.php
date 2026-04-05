@@ -1,7 +1,6 @@
 <?php
 
 use MDP\Framework\Request;
-use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('routeIs')) {
     /**
@@ -10,12 +9,12 @@ if (!function_exists('routeIs')) {
      */
     function routeIs(string $route): bool
     {
-        return '/' . $route === $_SERVER['REQUEST_URI'];
+        return "/$route" === $_SERVER['REQUEST_URI'];
     }
 }
 
 if (!function_exists('request')) {
-    function request(string $key = null)
+    function request(?string $key)
     {
         $request = new Request;
         if ($key) {
@@ -26,7 +25,7 @@ if (!function_exists('request')) {
 }
 
 if (!function_exists('post')) {
-    function post(string $key = null): mixed
+    function post(?string $key): mixed
     {
         if ($key) {
             return $_POST[$key] ?? null;
@@ -36,7 +35,7 @@ if (!function_exists('post')) {
 }
 
 if (!function_exists('files')) {
-    function files(string $key = null): mixed
+    function files(?string $key): mixed
     {
         if ($key) {
             return $_FILES[$key] ?? null;
@@ -46,7 +45,7 @@ if (!function_exists('files')) {
 }
 
 if (!function_exists('get')) {
-    function get(string $key = null): mixed
+    function get(?string $key): mixed
     {
         if ($key) {
             return $_GET[$key] ?? null;
@@ -63,7 +62,7 @@ if (!function_exists('baseUrl')) {
 }
 
 if (!function_exists('redirect')) {
-    #[NoReturn] function redirect(string $uri, $data = []): void
+    function redirect(string $uri, $data = []): void
     {
         setFlashMessages($data);
         header("Location: " . baseUrl() . $uri, true, 302);

@@ -7,7 +7,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 if (!function_exists("asset")) {
-    function asset(string $path = null): string
+    function asset(?string $path): string
     {
         $output = 'http://' . $_SERVER['HTTP_HOST'] . '/dist';
         if ($path) {
@@ -60,7 +60,7 @@ if (!function_exists("views_path")) {
      * @param string|null $path
      * @return string
      */
-    function views_path(string $path = null): string
+    function views_path(?string $path): string
     {
         $output = __DIR__ . '/Views';
         if ($path) {
